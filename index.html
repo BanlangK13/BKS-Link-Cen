@@ -1,0 +1,2505 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BKS Link Center ระบบเทคโนโลยีสารสนเทศ บริษัท ขนส่ง จำกัด</title>
+    <link rel="icon" href="images/BKS logo.png" type="image/png">
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght=400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- ตัวแปรโทนสี (CSS Variables) --- */
+        :root {
+            --bg-gradient: linear-gradient(135deg, #E61A8A 0%, #a6c1ee 100%);
+            --header-bg: #000000;
+            --header-text: #ffffff;
+            --card-bg: #ffffff;
+            --card-text: #555555;
+            --card-shadow: rgba(0, 0, 0, 0.05);
+            --card-shadow-hover: rgba(0, 0, 0, 0.15);
+            --text-shadow: rgba(0, 0, 0, 0.2);
+            --category-text: #ffffff;
+            --category-span: #000000;
+            --search-bg: #ffffff;
+            --search-text: #000000;
+            --search-shadow: rgba(0, 0, 0, 0.1);
+            --tooltip-bg: rgba(0, 0, 0, 0.85);
+            --tooltip-text: #ffffff;
+            --btn-bg: #ffffff;
+            --btn-text: #333333;
+            --clear-btn-bg: rgba(255, 255, 255, 0.2);
+            --clear-btn-text: #ffffff;
+            --voice-btn-color: #555555;
+            --voice-btn-active: #ff3333;
+            
+            /* Sticky Notes Light Mode */
+            --note-bg: #fff9db;
+            --note-text: #2b2b2b;
+            --note-border: #fcc419;
+            --widget-bg: #ffffff;
+            --widget-border: #e9ecef;
+
+            /* Trending Tags Light Mode */
+            --tag-bg: rgba(255, 255, 255, 0.8);
+            --tag-text: #E61A8A;
+            --tag-hover-bg: #E61A8A;
+            --tag-hover-text: #ffffff;
+
+            /* Back to Top Button Light Mode */
+            --backtop-bg: #ffffff;
+            --backtop-text: #E61A8A;
+            --backtop-hover-bg: #E61A8A;
+            --backtop-hover-text: #ffffff;
+            --backtop-border: rgba(230, 26, 138, 0.3);
+        }
+
+        [data-theme="dark"] {
+            --bg-gradient: linear-gradient(135deg, #121212 0%, #1e1e1e 100%);
+            --header-bg: #1a1a1a;
+            --header-text: #E61A8A; 
+            --card-bg: #242424;
+            --card-text: #e0e0e0;
+            --card-shadow: rgba(0, 0, 0, 0.3);
+            --card-shadow-hover: rgba(230, 26, 138, 0.25); 
+            --text-shadow: rgba(0, 0, 0, 0.5);
+            --category-text: #e0e0e0;
+            --category-span: #E61A8A;
+            --search-bg: #2e2e2e;
+            --search-text: #ffffff;
+            --search-shadow: rgba(0, 0, 0, 0.4);
+            --tooltip-bg: #333333;
+            --tooltip-text: #ffffff;
+            --btn-bg: #E61A8A;
+            --btn-text: #ffffff;
+            --clear-btn-bg: rgba(230, 26, 138, 0.2);
+            --clear-btn-text: #E61A8A;
+            --voice-btn-color: #aaaaaa;
+            --voice-btn-active: #ff5555;
+            
+            /* Sticky Notes Dark Mode */
+            --note-bg: #2c2a20;
+            --note-text: #ffe066;
+            --note-border: #fcc419;
+            --widget-bg: #1e1e1e;
+            --widget-border: #333333;
+
+            /* Trending Tags Dark Mode */
+            --tag-bg: #2e2e2e;
+            --tag-text: #ff66b2;
+            --tag-hover-bg: #E61A8A;
+            --tag-hover-text: #ffffff;
+
+            /* Back to Top Button Dark Mode */
+            --backtop-bg: #242424;
+            --backtop-text: #ff66b2;
+            --backtop-hover-bg: #E61A8A;
+            --backtop-hover-text: #ffffff;
+            --backtop-border: rgba(230, 26, 138, 0.4);
+        }
+
+        body {
+            font-family: 'Sarabun', sans-serif;
+            margin: 0;
+            padding: 40px 0 0 0;
+            background: var(--bg-gradient);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-sizing: border-box;
+            transition: background 0.3s ease;
+            padding-bottom: 60px !important; 
+        }
+
+        /* --- โซนปุ่มควบคุมมุมขวาบน --- */
+        .top-controls {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            display: flex;
+            gap: 10px;
+        }
+
+        .theme-toggle-btn, .note-toggle-btn, .feedback-link-btn {
+            background-color: var(--btn-bg);
+            color: var(--btn-text);
+            border: none;
+            padding: 10px 16px;
+            border-radius: 20px;
+            font-family: 'Sarabun', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            box-sizing: border-box;
+        }
+        
+        .theme-toggle-btn:hover, .note-toggle-btn:hover, .feedback-link-btn:hover { 
+            transform: scale(1.05); 
+        }
+
+        [data-theme="dark"] .feedback-link-btn {
+            background-color: var(--btn-bg);
+            color: var(--btn-text) !important;
+            border: none;
+        }
+
+        header {
+            position: relative;
+            text-align: center;
+            background-color: var(--header-bg);
+            background-size: cover;
+            background-position: center;
+            width: 100%;
+            padding: 40px 0;
+            margin-top: 0px;
+            margin-bottom: 35px;
+            transition: all 0.5s ease;
+        }
+        
+        .header-overlay {
+            position: relative;
+            z-index: 2;
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header-logo {
+            display: block;
+            margin: 0 auto 5px auto;
+            max-width: 280px;
+            height: auto;
+        }
+        
+        header h1 {
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--header-text);
+            text-shadow: 1px 1px 4px var(--text-shadow);
+            margin: 0;
+            transition: color 0.3s ease;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin-bottom: 50px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* --- กล่องแบนเนอร์ทักทายและนาฬิกา --- */
+        .greeting-container {
+            margin-bottom: 25px;
+            background: rgba(255, 255, 255, 0.92);
+            border-radius: 15px;
+            padding: 18px 35px;
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+            transition: all 0.3s ease;
+            align-self: center;
+        }
+
+        [data-theme="dark"] .greeting-container {
+            background: rgba(36, 36, 36, 0.6);
+            border: 1px solid rgba(230, 26, 138, 0.2);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .clock-box {
+            font-size: 28px;
+            font-weight: 700;
+            color: #2b2b2b;
+            font-family: 'Sarabun', monospace, sans-serif;
+            letter-spacing: 1px;
+        }
+
+        [data-theme="light"] .clock-box {
+            color: #d97706;
+        }
+
+        .greeting-text {
+            font-size: 15px;
+            font-weight: 500;
+            color: #444444;
+            line-height: 1.5;
+            text-align: center;
+        }
+
+        [data-theme="light"] .greeting-text {
+            color: #2b2b2b;
+            text-shadow: none;
+        }
+        
+        [data-theme="dark"] .greeting-container {
+            background: rgba(30, 30, 30, 0.85);
+            border: 1px solid rgba(230, 26, 138, 0.25);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+        }
+
+        [data-theme="dark"] .clock-box {
+            color: #ffe066;
+            text-shadow: 0 2px 8px rgba(255, 224, 102, 0.2);
+        }
+
+        [data-theme="dark"] .greeting-text {
+            color: #e0e0e0;
+        }
+        
+        /* --- โซนค้นหาและ Voice Search --- */
+        .search-area-wrapper {
+            width: 100%;
+            max-width: 850px;
+            margin: 0 auto 35px auto;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .search-container {
+            width: 100%;
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        #searchInput {
+            width: 100%;
+            padding: 18px 100px 18px 30px; /* เพิ่มขอบขวาเพื่อไม่ให้ข้อความชนปุ่มล้างข้อมูล */
+            font-size: 18px;
+            font-weight: 500;
+            font-family: 'Sarabun', sans-serif;
+            border: none;
+            border-radius: 35px;
+            background-color: var(--search-bg);
+            color: var(--search-text);
+            box-shadow: 0 5px 15px var(--search-shadow);
+            outline: none;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+        }
+
+        #searchInput:focus { box-shadow: 0 5px 20px rgba(230, 26, 138, 0.5); }
+        
+        /* --- ปุ่มล้างข้อมูลการค้นหา (Clear Search Button Input) --- */
+        .clear-search-input-btn {
+            position: absolute;
+            right: 58px; /* จัดวางให้อยู่ก่อนหน้าปุ่มไมโครโฟน */
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #888888;
+            font-size: 16px;
+            padding: 5px;
+            display: none; /* ซ่อนไว้เริ่มต้น จะแสดงเมื่อมีข้อความ */
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            transition: all 0.2s ease;
+            user-select: none;
+        }
+        .clear-search-input-btn:hover {
+            background-color: rgba(0, 0, 0, 0.05);
+            color: #333333;
+        }
+        [data-theme="dark"] .clear-search-input-btn:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+        }
+
+        .voice-search-btn {
+            position: absolute;
+            right: 20px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--voice-btn-color);
+            transition: all 0.3s ease;
+            padding: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+        }
+        
+        .voice-search-btn:hover { transform: scale(1.15); }
+        
+        .voice-search-btn.listening {
+            color: var(--voice-btn-active);
+            animation: pulse-red 1.2s infinite;
+        }
+
+        /* --- โซนคำค้นหายอดฮิต (Trending Searches) --- */
+      .trending-container {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 0 15px;
+    opacity: 1;         /* แสดงผลทันที */
+    max-height: none;   /* ขยายความสูงตามเนื้อหาอัตโนมัติ */
+    overflow: visible;
+    margin-top: 4px;    /* เพิ่มระยะห่างจากช่องค้นหาเล็กน้อย */
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+        .trending-container.show {
+            opacity: 1;
+            max-height: 100px;
+            margin-top: 4px;
+        }
+
+        .trending-label {
+            font-size: 13.5px;
+            font-weight: 600;
+            color: var(--category-text);
+            text-shadow: 1px 1px 2px var(--text-shadow);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .trending-tag {
+            background-color: var(--tag-bg);
+            color: var(--tag-text);
+            padding: 6px 14px;
+            border-radius: 15px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+            transition: all 0.2s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            user-select: none;
+        }
+
+        .trending-tag:hover {
+            background-color: var(--tag-hover-bg);
+            color: var(--tag-hover-text);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(230, 26, 138, 0.3);
+        }
+
+        @keyframes pulse-red {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.2); opacity: 0.6; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        /* --- หมวดหมู่และการ์ดระบบ --- */
+        .category-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--category-text);
+            margin-top: 35px;
+            margin-bottom: 15px;
+            text-shadow: 1px 1px 3px var(--text-shadow);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .category-title::after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+.toggle-category-btn {
+    background: linear-gradient(135deg, #1a6bbf, #155a9e);
+    color: #ffffff;
+    border: none;
+    padding: 0 14px;
+    height: 32px;
+    border-radius: 16px;
+    font-size: 13px;
+    font-weight: 600;
+    font-family: 'Sarabun', sans-serif;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    transition: all 0.2s ease;
+    order: 2;
+    margin-left: 10px;
+    white-space: nowrap;
+}
+.toggle-category-btn:hover {
+    background: linear-gradient(135deg, #155a9e, #0f4a85);
+    color: #ffffff;
+    transform: scale(1.03);
+}
+[data-theme="dark"] .toggle-category-btn {
+    background: linear-gradient(135deg, #1a6bbf, #155a9e);
+    border: none;
+}
+
+/* สถานะย่อ — เทาเข้ม */
+.toggle-category-btn.btn-collapse {
+    background: linear-gradient(135deg, #5a6475, #454e5c);
+}
+.toggle-category-btn.btn-collapse:hover {
+    background: linear-gradient(135deg, #454e5c, #353d49);
+}
+[data-theme="dark"] .toggle-category-btn.btn-collapse {
+    background: linear-gradient(135deg, #5a6475, #454e5c);
+}
+
+    .clear-recent-btn {
+    background-color: #e74c3c;
+    color: #ffffff;
+    border: none;
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-family: 'Sarabun', sans-serif;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-weight: 500;
+    order: 1;
+    margin-left: 10px;
+}
+.clear-recent-btn:hover {
+    background-color: #c0392b;
+    color: #ffffff;
+}
+
+        .grid-menu {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 20px;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .grid-menu.collapsed {
+            display: none !important;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 20px 12px;
+            text-align: center;
+            text-decoration: none;
+            color: var(--card-text);
+            box-shadow: 0 4px 6px var(--card-shadow);
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.3s ease, color 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            min-height: 220px;
+            box-sizing: border-box;
+            position: relative;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px var(--card-shadow-hover);
+            z-index: 999 !important;
+        }
+
+        .icon {
+            width: 100%;
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 10px;
+        }
+
+        .icon img {
+            width: auto;
+            height: auto;
+            max-width: 100%;
+            max-height: 120%;
+            object-fit: contain;
+        }
+        [data-theme="dark"] .icon img { filter: brightness(0.9); }
+
+        .card p {
+            margin: 0;
+            font-size: 15px;
+            line-height: 1.4;
+            font-weight: 500;
+            width: 100%;
+        }
+
+        /* --- Sticky Notes Widget --- */
+        .notes-drawer {
+            position: fixed;
+            top: 0;
+            right: -350px;
+            width: 330px;
+            height: 100vh;
+            background-color: var(--widget-bg);
+            border-left: 1px solid var(--widget-border);
+            box-shadow: -5px 0 25px rgba(0,0,0,0.15);
+            z-index: 999;
+            transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            padding: 90px 20px 20px 20px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .notes-drawer.open { right: 0; }
+
+        .notes-drawer h2 {
+            font-size: 18px;
+            margin: 0 0 15px 0;
+            color: var(--search-text);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 2px solid #E61A8A;
+            padding-bottom: 8px;
+        }
+
+        .sticky-note-area {
+            flex: 1;
+            background-color: var(--note-bg);
+            color: var(--note-text);
+            border: 1px dashed var(--note-border);
+            border-radius: 8px;
+            padding: 15px;
+            font-family: 'Sarabun', sans-serif;
+            font-size: 15px;
+            line-height: 1.6;
+            resize: none;
+            outline: none;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .save-status {
+            font-size: 12px;
+            color: #888888;
+            margin-top: 8px;
+            text-align: right;
+            font-style: italic;
+        }
+        
+        footer.copyright {
+            text-align: center;
+            color: #ffffff;
+            font-size: 14px;
+            padding: 20px 10px;
+            margin-top: auto;
+            width: 100%;
+            background-color: transparent; 
+            box-sizing: border-box;
+        }
+        footer.copyright p { margin: 0; font-weight: 400; }
+        
+        /* --- ระบบ Tooltip --- */
+        .card::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: 108%;
+            left: 50%;
+            transform: translateX(-50%) translateY(10px) !important;
+            background: var(--tooltip-bg) !important;
+            color: var(--tooltip-text) !important;
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 400;
+            white-space: normal;
+            width: 250px;
+            line-height: 1.5;
+            text-align: left;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s;
+            z-index: 10000 !important;
+        }
+
+        .card::before {
+            content: "";
+            position: absolute;
+            bottom: 101%;
+            left: 50%;
+            transform: translateX(-50%) translateY(10px) !important;
+            border-width: 7px;
+            border-style: solid;
+            border-color: var(--tooltip-bg) transparent transparent transparent;
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s;
+            z-index: 10000 !important;
+        }
+
+        .card:hover::after {
+            opacity: 1 !important;
+            visibility: visible !important;
+            transform: translateX(-50%) translateY(0) !important;
+            pointer-events: auto;
+        }
+
+        .card:hover::before {
+            opacity: 1 !important;
+            visibility: visible !important;
+            transform: translateX(-50%) translateY(0) !important;
+            pointer-events: auto;
+        }
+        
+        /* --- ปุ่มย้อนกลับไปด้านบนสุด (Back to Top Button แบบมี Text) --- */
+        .back-to-top {
+            position: fixed;
+            bottom: 60px; /* ไม่ให้ทับแถบข่าววิ่ง */
+            right: 25px;
+            background-color: var(--backtop-bg);
+            color: var(--backtop-text);
+            border: 1px solid var(--backtop-border);
+            padding: 10px 16px;
+            border-radius: 30px;
+            font-family: 'Sarabun', sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+            opacity: 0;
+            visibility: hidden;
+            z-index: 999;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            background-color: var(--backtop-hover-bg);
+            color: var(--backtop-hover-text);
+            border-color: transparent;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(230, 26, 138, 0.4);
+        }
+
+        /* --- แถบข่าววิ่งด้านล่าง --- */
+        .ticker-container {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #f1f3f5;
+            border-top: 2px solid #e9ecef;
+            box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.08);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            font-family: 'Sarabun', sans-serif;
+            height: 40px;
+            box-sizing: border-box;
+            overflow: hidden;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+
+        .ticker-title {
+            background-color: #ff3333;
+            color: #ffffff;
+            padding: 0 15px;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+            font-weight: 700;
+            white-space: nowrap;
+            z-index: 2;
+            box-shadow: 4px 0 10px rgba(0, 0, 0, 0.15);
+        }
+
+        .ticker-wrap {
+            flex: 1;
+            overflow: hidden;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+        }
+
+        .ticker-text {
+            display: inline-block;
+            padding-left: 100vw;
+            padding-right: 50px;
+            font-size: 14px;
+            font-weight: 500;
+            color: #333333;
+            animation: ticker-animation-pure 50s linear infinite; 
+        }
+
+        .ticker-highlight {
+            color: #ff3333;
+            font-weight: 700;
+            margin: 0 10px;
+        }
+
+        @keyframes ticker-animation-pure {
+            0% { transform: translate3d(0, 0, 0); }
+            100% { transform: translate3d(-100%, 0, 0); }
+        }
+
+        .ticker-wrap:hover .ticker-text {
+            animation-play-state: paused;
+            cursor: pointer;
+        }
+
+        [data-theme="dark"] .ticker-container {
+            background-color: #1a1a1a;
+            border-top: 2px solid #E61A8A;
+            box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.5);
+        }
+        [data-theme="dark"] .ticker-text { color: #e0e0e0; }
+        [data-theme="dark"] .ticker-highlight { color: #ff5555; }
+        
+/* --- ปุ่มขยาย/ย่อทั้งหมด --- */
+.global-toggle-btn {
+    background: linear-gradient(135deg, #1a6bbf, #155a9e);
+    color: #ffffff;
+    border: none;
+    padding: 12px 28px;
+    border-radius: 25px;
+    font-family: 'Sarabun', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(26, 107, 191, 0.35);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.25s ease;
+    letter-spacing: 0.3px;
+}
+.global-toggle-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 22px rgba(26, 107, 191, 0.5);
+    background: linear-gradient(135deg, #155a9e, #0f4a85);
+}
+.global-toggle-btn:active {
+    transform: translateY(0px);
+    box-shadow: 0 3px 10px rgba(26, 107, 191, 0.3);
+}
+[data-theme="dark"] .global-toggle-btn {
+    background: linear-gradient(135deg, #1a6bbf, #155a9e);
+    box-shadow: 0 4px 18px rgba(26, 107, 191, 0.4);
+}
+
+/* สถานะย่อ — เทาเข้ม */
+.global-toggle-btn.btn-collapse {
+    background: linear-gradient(135deg, #5a6475, #454e5c);
+    box-shadow: 0 4px 15px rgba(90, 100, 117, 0.35);
+}
+.global-toggle-btn.btn-collapse:hover {
+    background: linear-gradient(135deg, #454e5c, #353d49);
+    box-shadow: 0 8px 22px rgba(90, 100, 117, 0.5);
+}
+[data-theme="dark"] .global-toggle-btn.btn-collapse {
+    background: linear-gradient(135deg, #5a6475, #454e5c);
+    box-shadow: 0 4px 18px rgba(90, 100, 117, 0.4);
+}
+
+		
+		/* ปุ่มปฏิทินมุมซ้ายบน */
+.top-controls-left {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 1000;
+}
+
+.calendar-toggle-btn {
+    background-color: var(--btn-bg);
+    color: var(--btn-text);
+    border: none;
+    padding: 10px 16px;
+    border-radius: 20px;
+    font-family: 'Sarabun', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+}
+.calendar-toggle-btn:hover { transform: scale(1.05); }
+
+/* Popup ปฏิทิน */
+.calendar-popup {
+    position: fixed;
+    top: 68px;
+    left: 20px;
+    z-index: 1001;
+    background-color: var(--card-bg);
+    border-radius: 16px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+    padding: 16px;
+    width: 280px;
+    display: none;
+    font-family: 'Sarabun', sans-serif;
+    border: 1px solid rgba(230,26,138,0.2);
+    animation: fadeInCal 0.2s ease;
+}
+.calendar-popup.open { display: block; }
+
+@keyframes fadeInCal {
+    from { opacity: 0; transform: translateY(-8px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.calendar-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--search-text);
+}
+.cal-nav {
+    background: none;
+    border: none;
+    font-size: 22px;
+    cursor: pointer;
+    color: #E61A8A;
+    line-height: 1;
+    padding: 0 6px;
+    transition: transform 0.2s;
+}
+.cal-nav:hover { transform: scale(1.3); }
+
+.calendar-weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    text-align: center;
+    font-size: 12px;
+    font-weight: 600;
+    color: #E61A8A;
+    margin-bottom: 6px;
+}
+
+.calendar-days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 2px;
+    text-align: center;
+}
+.calendar-days .cal-day {
+    padding: 6px 2px;
+    font-size: 13px;
+    border-radius: 8px;
+    cursor: default;
+    color: var(--card-text);
+    transition: background 0.15s;
+}
+.calendar-days .cal-day.other-month { color: #aaaaaa; }
+.calendar-days .cal-day.today {
+    background-color: #E61A8A;
+    color: #ffffff !important;
+    font-weight: 700;
+    border-radius: 50%;
+}
+.calendar-days .cal-day.sunday { color: #e74c3c; }
+.calendar-days .cal-day.saturday { color: #3498db; }
+[data-theme="dark"] .calendar-days .cal-day.sunday { color: #ff6b6b; }
+[data-theme="dark"] .calendar-days .cal-day.saturday { color: #74b9ff; }
+		
+		
+		/* วันหยุดราชการ */
+.calendar-days .cal-day.holiday {
+    background-color: rgba(255, 200, 0, 0.18);
+    border-radius: 6px;
+    position: relative;
+    cursor: help;
+}
+.calendar-days .cal-day.holiday.today {
+    background-color: #E61A8A;
+    border-radius: 50%;
+}
+.holiday-dot {
+    display: block;
+    width: 4px;
+    height: 4px;
+    background-color: #f39c12;
+    border-radius: 50%;
+    margin: 1px auto 0 auto;
+}
+.cal-day.today .holiday-dot {
+    background-color: #ffffff;
+}
+
+/* Legend วันหยุด */
+.cal-legend {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-top: 10px;
+    padding-top: 8px;
+    border-top: 1px solid rgba(0,0,0,0.08);
+    font-size: 11px;
+    color: #666666;
+    flex-wrap: wrap;
+}
+.cal-legend-item {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+.legend-dot-holiday {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: #f39c12;
+    display: inline-block;
+}
+.legend-today-circle {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background-color: #E61A8A;
+    display: inline-block;
+}
+[data-theme="dark"] .cal-legend { color: #aaaaaa; border-top-color: rgba(255,255,255,0.1); }
+[data-theme="dark"] .calendar-days .cal-day.holiday { background-color: rgba(255, 200, 0, 0.12); }
+		
+    </style>
+</head>
+<body>
+
+<!-- ปุ่มปฏิทินมุมซ้ายบน -->
+<div class="top-controls-left">
+    <button class="calendar-toggle-btn" id="calendarToggleBtn">
+        <span>📅</span> <span>ปฏิทิน</span>
+    </button>
+</div>
+
+<!-- Popup ปฏิทิน -->
+<div class="calendar-popup" id="calendarPopup">
+    <div class="calendar-header">
+        <button class="cal-nav" id="calPrev">&#8249;</button>
+        <span id="calMonthYear"></span>
+        <button class="cal-nav" id="calNext">&#8250;</button>
+    </div>
+    <div class="calendar-weekdays">
+        <span>อา</span><span>จ</span><span>อ</span><span>พ</span><span>พฤ</span><span>ศ</span><span>ส</span>
+    </div>
+    <div class="calendar-days" id="calDays"></div>
+	
+	<!-- ← ใส่ตรงนี้ก่อนปิด div -->
+    <div class="cal-legend">
+        <div class="cal-legend-item"><span class="legend-today-circle"></span> วันนี้</div>
+        <div class="cal-legend-item"><span class="legend-dot-holiday"></span> วันหยุดราชการ</div>
+        <div class="cal-legend-item"><span style="color:#e74c3c; font-weight:700; font-size:13px;">อา</span> อาทิตย์</div>
+        <div class="cal-legend-item"><span style="color:#3498db; font-weight:700; font-size:13px;">ส</span> เสาร์</div>
+    </div>
+</div>
+
+    <div class="top-controls">
+        <a href="https://forms.gle/8u9HtPYik4ZhcDBY7" class="feedback-link-btn" target="_blank">
+            <span>💡</span> <span>ส่งข้อเสนอแนะ</span>
+        </a>
+        <button class="note-toggle-btn" id="noteToggleBtn">
+            <span>📝</span> <span>บันทึกช่วยจำ</span>
+        </button>
+        <button class="theme-toggle-btn" id="themeToggle">
+            <span id="themeIcon">🌙</span> <span id="themeText">โหมดมืด</span>
+        </button>
+    </div>
+
+    <div class="notes-drawer" id="notesDrawer">
+        <h2>📌 บันทึกช่วยจำส่วนตัว</h2>
+        <textarea class="sticky-note-area" id="stickyNoteArea" placeholder="พิมพ์ข้อความบันทึกช่วยจำ หรืองานด่วนที่ต้องทำไว้ที่นี่... ระบบจะทำการบันทึกข้อมูลให้อัตโนมัติ"></textarea>
+        <div class="save-status" id="saveStatus">ดึงข้อมูลล่าสุดเรียบร้อยแล้ว</div>
+    </div>
+
+    <header id="mainHeader">
+        <div class="header-overlay">
+            <img src="images/BKS logo.png" alt="BKS Logo" class="header-logo">
+            <h1 class="header-title">BKS Link Center (ระบบเทคโนโลยีสารสนเทศ บริษัท ขนส่ง จำกัด)</h1>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="greeting-container">
+            <div class="clock-box" id="digitalClock">ขณะนี้เวลา 00:00:00 น.</div>
+            <div class="greeting-text" id="greetingMessage">กำลังโหลดข้อมูลต้อนรับ...</div>
+        </div>
+
+        <div class="search-area-wrapper" id="searchAreaWrapper">
+            <div class="search-container">
+                <input type="text" id="searchInput" placeholder="🔍 พิมพ์ข้อความเพื่อค้นหาระบบที่ต้องการใช้งาน หรือคลิกที่ # ด้านล่าง" autocomplete="off">
+                <button class="clear-search-input-btn" id="clearSearchInputBtn" title="ล้างข้อมูลการค้นหา">✖</button>
+                <button class="voice-search-btn" id="voiceSearchBtn" title="ค้นหาด้วยเสียง (ภาษาไทย)">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="22" height="22">
+                        <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5.3-3c0 3-2.54 5.1-5.3 5.1S6.7 14 6.7 11H5c0 3.41 2.72 6.23 6 6.72V21h2v-3.28c3.28-.48 6-3.3 6-6.72h-1.7z"/>
+                    </svg>
+                </button>
+            </div>
+            
+            <div class="trending-container show" id="trendingContainer">
+                <div class="trending-label">🔥 คลิกที่ # คำที่ค้นหาบ่อย:</div>
+					 <div class="trending-tag" data-search="หมวดทั่วไป">#หมวดทั่วไป</div>
+				 <div class="trending-tag" data-search="แบบฟอร์ม">#แบบฟอร์มคำขอ</div>
+				 <div class="trending-tag" data-search="BKS Phonebook">#สมุดโทรศัพท์</div>
+				  <div class="trending-tag" data-search="ZOOM">#จองห้อง Zoom</div>
+				  <div class="trending-tag" data-search="MOT">#ระบบ MOT/BSC</div>
+				    <div class="trending-tag" data-search="ไลน์">#ช่องทางติดต่อ</div>
+					<div class="trending-tag" data-search="facebook">#เฟสบุค</div>
+						<div class="trending-tag" data-search="โซเชียว">#โซเชียว</div>
+							
+                <div class="trending-tag" data-search="BKS SmartTime">#ระบบบันทึกเวลา</div>
+                <div class="trending-tag" data-search="E-sarabun">#ระบบสารบรรณ</div>
+                <div class="trending-tag" data-search="ซ่อมอุปกรณ์">#แจ้งซ่อมอุปกรณ์</div>
+                <div class="trending-tag" data-search="จองตั๋ว">#จองตั๋ว</div>
+				  <div class="trending-tag" data-search="ดาวน์โหลด">#ดาวน์โหลดโปรแกรม</div>
+                    
+					        <div class="trending-tag" data-search="MFC">#ระบบกองทุน</div>
+							<div class="trending-tag" data-search="สหกรณ์ออมทรัพย์">#สหกรณ์ออมทรัพย์</div>
+                     <div class="trending-tag" data-search="AI">#AI</div>
+					 <div class="trending-tag" data-search="โปรแกรม">#โปรแกรม</div>
+					  <div class="trending-tag" data-search=" หมวดเว็บไซต์ภายใน">#เว็บภายใน</div>
+					  
+					    
+					
+            </div>
+        </div>
+
+<!-- ปุ่มขยาย/ย่อทั้งหมด -->
+<div style="display: flex; justify-content: center; margin-bottom: 10px;">
+    <button id="toggleAllBtn" class="global-toggle-btn btn-collapse">🔽 คลิกเพื่อย่อหมวดหมู่ทั้งหมด</button>
+</div>
+
+        <div id="recentSection" style="display: none;">
+            <div class="category-title" id="recentHeader">
+                ⏱️ ระบบที่ท่านใช้งานล่าสุด (Recently Used)
+                <button class="clear-recent-btn" id="clearRecentBtn">👉 คลิกเพื่อล้างประวัติ</button>
+            </div>
+            <div class="grid-menu" id="recentGrid"></div>
+        </div>
+
+        <div class="category-title">🌐 หมวดทั่วไป</div>
+        <div class="grid-menu">
+            <a href="https://transport.co.th/" class="card" target="_blank" data-id="web-bks" data-tags="เว็ป,บขส,web,เวป,เวบ" data-tooltip="หน้าเว็บไซต์หลักอย่างเป็นทางการของ บริษัท ขนส่ง จำกัด (บขส.)">
+                <div class="icon"><img src="images/tcl logo.jpg" alt="icon"></div>
+                <p>เว็บไซต์บริษัท ขนส่ง จำกัด</p>
+            </a>
+            <a href="http://172.4.0.253/" class="card" target="_blank" data-id="tran-info" data-tags="เว็ป,บขส,web,เวป,เวบ"  data-tooltip="ศูนย์รวมข้อมูล ข่าวสารประชาสัมพันธ์ และระบบสารสนเทศภายในองค์กร บขส.">
+                <div class="icon"><img src="images/tran-info.jpg" alt="icon"></div>
+                <p>เว็บ Tran-info บริษัท ขนส่ง จำกัด</p>
+            </a>
+            <a href="https://tcl99web.transport.co.th/Home" class="card" target="_blank" data-id="e-ticket-public" data-tags="เว็ปจองตั๋ว,จองตั๋ว" data-tooltip="ตรวจสอบตารางเดินรถ และสำรองที่นั่งตั๋วโดยสารออนไลน์สำหรับประชาชน">
+                <div class="icon"><img src="images/web e-ticket.jpg" alt="icon"></div>
+                <p>เว็บจองตั๋วโดยสาร บริษัท ขนส่ง จำกัด</p>
+            </a>
+            <a href="http://202.139.213.101/kpi/Default.aspx?tabid=56&ctl=Login&returnurl=%2fkpi%2f" class="card" target="_blank" data-id="mot-bsc" data-tooltip="ระบบรายงานตัวชี้วัด ประเมินผลการดำเนินงาน และติดตามงานตามนโยบายกระทรวงคมนาคม">
+               <div class="icon"><img src="images/mot-bsc.png" alt="icon"></div>
+                <p>ระบบติดตามและประเมินผล MOT/BSC</p>
+            </a>
+            <a href="https://dev209.bizsmarterp.com/TRANSPORT_TIME_68/workflow/index.php" class="card" target="_blank" data-id="smarttime" data-tags="ลงเวลา,สแกน,เข้างาน,ออกงาน,เวลาทำงาน"  data-tooltip="ระบบบันทึกเวลาเข้า-ออกงาน ตรวจสอบเวลาปฏิบัติงาน และสถิติการมาทำงานของพนักงาน">
+                <div class="icon"><img src="images/time logo.png" alt="icon"></div>
+                <p>ระบบ BKS SmartTime</p>
+            </a>
+            <a href="https://saraban.transport.co.th/municipal/login" class="card" target="_blank" data-id="e-saraban" data-tooltip="ระบบรับ-ส่ง จัดเก็บ และเวียนหนังสือราชการ เอกสารฝ่ายบริหารภายใน บขส. (E-Sarabun)">
+                <div class="icon"><img src="images/e-sarabun.png" alt="icon"></div>
+                <p>ระบบ E-sarabun (สารบรรณอิเล็กทรอนิกส์)</p>
+            </a>
+            <a href="https://pvd.mfcfund.com/auth/login" class="card" target="_blank" data-id="mfc-pvd" data-tooltip="ระบบตรวจสอบยอดเงินสะสม เงินสมทบ และข้อมูลกองทุนสำรองเลี้ยงชีพพนักงาน บขส.">
+                <div class="icon"><img src="images/mfc.jpg" alt="icon"></div>
+                <p>ระบบกองทุนสำรองเลี้ยงชีพ (MFC)</p>
+            </a>
+            <a href="https://www.bbnet-host.com/coop/transport/main/frontend/web/index.php/site/login" class="card" target="_blank" data-id="coop-bks" data-tooltip="ระบบบริการสมาชิกสหกรณ์ ตรวจสอบยอดเงินฝาก หุ้น เงินกู้ และสวัสดิการสมาชิก">
+                <div class="icon"><img src="images/transport.webp" alt="icon"></div>
+                <p>ระบบสหกรณ์ออมทรัพย์พนักงาน บขส.</p>
+            </a>
+            <a href="phonebook-maintenance.html" class="card" target="_blank" data-id="phone-book" data-tags="เบอร์,เบอร์โทร,หาเบอร์,เบอร์ภายใน" data-tooltip="ฐานข้อมูลหมายเลขโทรศัพท์ภายใน และช่องทางการติดต่อหน่วยงานต่างๆ ของ บขส.">
+                <div class="icon"><img src="images/pn2.png" alt="icon"></div>
+                <p>BKS Phonebook (อยู่ระหว่างการอัปเดตข้อมูล)</p>
+            </a>
+			
+			 <a href="https://tms.transport.co.th/webtracking/" class="card" target="_blank" data-id="tk" data-tags="พัสดุ" data-tooltip="ระบบติดตามพัสดุ">
+                <div class="icon"><img src="images/tk.png" alt="icon"></div>
+                <p>ระบบติดตามพัสดุ</p>
+            </a>
+			
+			 <a href="https://transport.co.th/auction/" class="card" target="_blank" data-id="jj" data-tags="จัดจ้าง,จัดซื้อ" data-tooltip="ระบบจัดซื้อจัดจ้าง บขส.">
+                <div class="icon"><img src="images/jj.png" alt="icon"></div>
+                <p>ระบบจัดซื้อจัดจ้าง บขส.</p>
+            </a>
+			
+			 <a href="https://transport.co.th/home/%e0%b8%aa%e0%b8%a1%e0%b8%b1%e0%b8%84%e0%b8%a3%e0%b8%87%e0%b8%b2%e0%b8%99%e0%b8%81%e0%b8%b1%e0%b8%9a-%e0%b8%9a%e0%b8%82%e0%b8%aa/2024/11/19/%e0%b8%82%e0%b9%88%e0%b8%b2%e0%b8%a7%e0%b8%a3%e0%b8%b1%e0%b8%9a%e0%b8%aa%e0%b8%a1%e0%b8%b1%e0%b8%84%e0%b8%a3%e0%b8%87%e0%b8%b2%e0%b8%99/" class="card" target="_blank" data-id="new" data-tags="สมัครงาน,งาน,รับสมัคร,สมัคร" data-tooltip="ข่าวรับสมัครงาน">
+                <div class="icon"><img src="images/new.png" alt="icon"></div>
+                <p>ข่าวรับสมัครงาน บขส.</p>
+            </a>
+			
+        </div>
+
+        <div class="category-title">📄 หมวดแบบฟอร์ม-คู่มือการใช้งานต่างๆ</div>
+        <div class="grid-menu">
+            <a href="http://172.4.0.253/forumdisplay.php?fid=13" class="card" target="_blank" data-id="manual-itd" data-tooltip="คลังดาวน์โหลดแบบฟอร์ม คำขอ คู่มือการใช้งานระบบต่างๆ ของกองเทคโนโลยีสารสนเทศ">
+                <div class="icon"><img src="images/bks.jfif" alt="icon"></div>
+                <p>รวมแบบฟอร์ม เอกสารและคู่มือ (กทส.)</p>
+            </a>
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSeUC4nOyYvfgjy_JEoXb0CvKvbGiIY68xCif9SXAFZ3ZIelww/viewform" class="card" target="_blank" data-id="form-zoom" data-tooltip="ยื่นคำขอออนไลน์เพื่อจองวัน เวลา และขอสิทธิ์เปิดห้องประชุมทางไกลผ่านระบบ ZOOM">
+                <div class="icon"><img src="images/Zoom-Logo.png" alt="icon"></div>
+                <p>แบบฟอร์มขอเปิดห้องประชุม (ZOOM Meeting) </p>
+            </a>
+            <a href="http://172.4.0.253/attachment.php?aid=677" class="card" target="_blank" data-id="form-eticket" data-tags="จองห้อง,บขส,web,เวป,เวบ" data-tooltip="ดาวน์โหลดแบบฟอร์มคำขอเปิดสิทธิ์ ปรับปรุงสิทธิ์ หรือยกเลิกผู้ใช้งานระบบจำหน่ายตั๋ว">
+                <div class="icon"><img src="images/et.png" alt="icon"></div>
+                <p>แบบฟอร์มขอสิทธิ์การใช้งานระบบ (E-Ticket)</p>
+            </a>
+            <a href="http://172.4.0.253/attachment.php?aid=678" class="card" target="_blank" data-id="form-mis" data-tooltip="ดาวน์โหลดแบบฟอร์มคำขอสิทธิ์เข้าใช้งานระบบสารสนเทศเพื่อการบริหารจัดการ">
+                <div class="icon"><img src="images/mis.jpg" alt="icon"></div>
+                <p>แบบฟอร์มขอสิทธิ์การใช้งานระบบ MIS</p>
+            </a>
+            <a href="http://172.4.0.253/attachment.php?aid=12" class="card" target="_blank" data-id="form-repair" data-tooltip="ดาวน์โหลดแบบฟอร์มแจ้งซ่อมคอมพิวเตอร์ โน้ตบุ๊ก เครื่องพิมพ์ และอุปกรณ์ไอทีที่ชำรุด">
+                <div class="icon"><img src="images/service.png" alt="icon"></div>
+                <p>แบบฟอร์มขอส่งซ่อมอุปกรณ์คอมพิวเตอร์</p>
+            </a>
+            <a href="http://172.4.0.253/attachment.php?aid=537" class="card" target="_blank" data-id="form-wifi" data-tooltip="ดาวน์โหลดแบบฟอร์มขออนุมัติสิทธิ์การเชื่อมต่อระบบเครือข่ายไร้สายภายในองค์กร">
+                <div class="icon"><img src="images/wf.png" alt="icon"></div>
+                <p>แบบฟอร์มขอใช้งาน Wireless</p>
+            </a>
+        </div>
+
+        <div class="category-title">🌐 หมวดเว็บไซต์ภายในของหน่วยงานใน บขส. <span style="color: var(--category-span); font-weight: 600;">(อยู่ระหว่างการปรับปรุง)</span></div>
+        <div class="grid-menu">
+            <a href="http://172.4.0.253/it-tcl/" class="card" target="_blank" data-id="web-itd" data-tooltip="หน้าเว็บหลักของ กทส. ข้อมูลโครงสร้างองค์กร บริการด้านไอที และการสนับสนุนทางเทคนิค">
+                <div class="icon"><img src="images/itd-bks.png" alt="icon"></div>
+                <p>กองเทคโนโลยีสารสนเทศ</p>
+            </a>
+            <a href="http://172.4.0.253/Department/hr/hrm_new.htm" class="card" target="_blank" data-id="web-hrm" data-tooltip="หน้าเว็บข้อมูลข่าวสารงานบุคคล สิทธิประโยชน์พนักงาน และระเบียบข้อบังคับองค์กร">
+                <div class="icon"><img src="images/tcl logo.jpg" alt="icon"></div>
+                <p>กองบริหารทรัพยากรบุคคล</p>
+            </a>
+             <a href="http://172.4.0.253/Department/HRD/" class="card" target="_blank" data-id="web-hrd" data-tooltip="หน้าเว็บข้อมูลหลักสูตรการฝึกอบรม การพัฒนาศักยภาพ และแผนการเรียนรู้ของพนักงาน">
+                <div class="icon"><img src="images/hrm.jpg" alt="icon"></div>
+                <p>กองพัฒนาทรัพยากรบุคคล</p>
+            </a>
+             <a href="http://172.4.0.253/Department/Report_Budget/statements.html" class="card" target="_blank" data-id="web-accounting" data-tooltip="หน้าเว็บรายงานทางการเงิน ข้อมูลระบบบัญชี และการประมวลผลงบการเงินภายใน">
+                <div class="icon"><img src="images/tcl logo.jpg" alt="icon"></div>
+                <p>กองระบบและประมวลผลบัญชี</p>
+            </a>
+             <a href="http://172.4.0.253/Department/planning/webpage_61/Page%20%E0%B8%81%E0%B8%A7%E0%B8%9C/Main_index.html" class="card" target="_blank" data-id="web-strategy" data-tooltip="หน้าเว็บข้อมูลแผนวิสาหกิจ ยุทธศาสตร์องค์กร และโครงการสำคัญของ บขส.">
+                <div class="icon"><img src="images/tcl logo.jpg" alt="icon"></div>
+                <p>กองบริหารยุทธศาสตร์</p>
+            </a>
+              <a href="http://172.4.0.253/Department/%E0%B8%81%E0%B8%AD%E0%B8%87%E0%B8%87%E0%B8%9A%E0%B8%9B%E0%B8%A3%E0%B8%B0%E0%B8%A1%E0%B8%B2%E0%B8%93/Main_Page/Main_index.html" class="card" target="_blank" data-id="web-budget" data-tooltip="หน้าเว็บข้อมูลการจัดสรรงบประมาณ การขออนุมัติ และการติดตามใช้จ่ายงบประมาณ">
+                <div class="icon"><img src="images/tcl logo.jpg" alt="icon"></div>
+                <p>กองงบประมาณ</p>
+            </a>
+              <a href="http://172.4.0.253/Department/Risk/Myweb/" class="card" target="_blank" data-id="web-risk" data-tooltip="หน้าเว็บนโยบายการจัดการความเสี่ยงองค์กร คู่มือ GRC และการประเมินความเสี่ยงหน่วยงาน">
+                <div class="icon"><img src="images/tcl logo.jpg" alt="icon"></div>
+                <p>กองบริหารความเสี่ยง</p>
+            </a>
+              <a href="http://172.4.0.253/Department/Audit/" class="card" target="_blank" data-id="web-audit" data-tooltip="หน้าเว็บแผนการตรวจประเมินภายใน แนวทางการกำกับดูแล และรายงานการตรวจสอบ">
+                <div class="icon"><img src="images/audit.png" alt="icon"></div>
+                <p>สำนักตรวจสอบภายใน</p>
+            </a>
+        </div>
+        
+        <div class="category-title">🖥️ หมวดการพัฒนาบุคลากรและการฝึกอบรม (HRD & E-Learning)</div>
+        <div class="grid-menu">
+            <a href="https://learningportal.ocsc.go.th/learningportal" class="card" target="_blank" data-id="ocsc.go.th" data-tooltip="OCSC Learning Portal ศูนย์การเรียนรู้ทางสื่ออิเล็กทรอนิกส์แบบบูรณาการ">
+                <div class="icon"><img src="images/ocsc.png" alt="icon"></div>
+                <p>OCSC Learning Portal</p>
+            </a>
+             <a href="https://thaimooc.ac.th/" class="card" target="_blank" data-id="thaimooc" data-tooltip="แพลตฟอร์มการเรียนรู้ตลอดชีวิต โครงการมหาวิทยาลัยไซเบอร์ไทย">
+                <div class="icon"><img src="images/thaimoc.png" alt="icon"></div>
+                <p>Thaimooc </p>
+            </a>
+             
+			   <a href="https://elearning.set.or.th/" class="card" target="_blank" data-id="SET" data-tooltip="แหล่งเรียนรู้การเงินการลงทุนแบบดิจิทัล ผสมผสานเทคโนโลยีมัลติมีเดีย">
+                <div class="icon"><img src="images/SET.png" alt="icon"></div>
+                <p>SET e-Learning</p>
+            </a>
+			 
+        </div>
+		
+		
+		
+		       <div class="category-title">🔒 หมวดเฉพาะพนักงานที่เกี่ยวข้อง</div>
+        <div class="grid-menu">
+            <a href="https://tcl99bms.transport.co.th/Login" class="card" target="_blank" data-id="e-ticket-staff" data-tooltip="ระบบสำหรับเจ้าหน้าที่ขายตั๋ว ตรวจสอบสถานะรถ ช่องบริการ และจัดการข้อมูลการเดินรถ">
+                <div class="icon"><img src="images/e-ticket.png" alt="icon"></div>
+                <p>ระบบจำหน่ายตั๋วโดยสาร (E-ticket)</p>
+            </a>
+             <a href="https://lk2.transport.co.th/pages/login/" class="card" target="_blank" data-id="linkage2" data-tooltip="ระบบฐานข้อมูลกลางเชื่อมโยงข้อมูล ประสานสิทธิ์ และตรวจสอบเอกสารเฉพาะเจ้าหน้าที่">
+                <div class="icon"><img src="images/linkage.png" alt="icon"></div>
+                <p>Linkage Center II </p>
+            </a>
+              <a href="http://172.4.0.253:8080/login" class="card" target="_blank" data-id="meeting-doc" data-tooltip="ระบบจัดเตรียม ตรวจสอบ และเข้าถึงเอกสารวาระการประชุมคณะกรรมการและผู้บริหาร บขส.">
+                <div class="icon"><img src="images/doc.png" alt="icon"></div>
+                <p>ระบบจัดการเอกสารวาระการประชุม</p>
+            </a>
+        </div>
+		
+        
+        <div class="category-title">📱 หมวดโซเชียว บริษัท ขนส่ง จำกัด</div>
+        <div class="grid-menu">
+            <a href="https://www.facebook.com/BorKorSor99" class="card" target="_blank" data-id="fb-bks" data-tooltip="แฟนเพจอย่างเป็นทางการของ บขส. สำหรับประชาสัมพันธ์ข้อมูลข่าวสารแก่ประชาชนทั่วไป">
+                <div class="icon"><img src="images/99.jpg" alt="icon"></div>
+                <p>facebook บขส.</p>
+            </a>
+            <a href="https://www.facebook.com/itd.bks/" class="card" target="_blank" data-id="fb-itd" data-tooltip="แฟนเพจสื่อสารข้อมูลด้านไอที แจ้งเตือนภัยไซเบอร์ และข่าวสารงานบริการของ กทส.">
+                <div class="icon"><img src="images/fb2.jpg" alt="icon"></div>
+                <p>facebook กองเทคโนโลยีสารสนเทศ</p>
+            </a>
+			
+			 <a href="https://www.youtube.com/watch?v=D67DLYpmric&list=PLkSkKbq4bjT3FiMtMYpvKJ_Kiv_lM_Z5A" class="card" target="_blank" data-id="fb-itd" data-tooltip="ช่องยูทูบของกองเทคโนโลยีสารสนเทศ">
+                <div class="icon"><img src="images/yt.png" alt="icon"></div>
+                <p>YouTube กองเทคโนโลยีสารสนเทศ</p>
+            </a>
+			
+			<a href="https://www.facebook.com/CSR.BKS1930" class="card" target="_blank" data-id="fb-audit" data-tooltip="แฟนเพจประชาสัมพันธ์ ข้อมูลข่าวสาร สำนักตรวจสอบภายใน บริษัท ขนส่ง จำกัด">
+                <div class="icon"><img src="images/audit.png" alt="icon"></div>
+                <p>facebook สำนักตรวจสอบภายใน</p>
+            </a>
+			
+            <a href="https://www.facebook.com/hrm.transport" class="card" target="_blank" data-id="fb-hrm" data-tooltip="แฟนเพจสื่อสารภายใน แจ้งข่าวสารงานบุคคล กิจกรรม และประกาศสำคัญสำหรับพนักงาน">
+                <div class="icon"><img src="images/fb3.jpg" alt="icon"></div>
+                <p>facebook กองบริหารทรัพยากรบุคคล บขส.</p>
+            </a>
+            <a href="https://www.facebook.com/profile.php?id=61561615389297" class="card" target="_blank" data-id="fb-bks-news" data-tooltip="เพจศูนย์รวมข่าวสาร เกาะติดสถานการณ์การเดินรถ และกิจกรรมภายในองค์กร บขส.">
+                <div class="icon"><img src="images/fb4.jpg" alt="icon"></div>
+                <p>facebook สถานีข่าว BKS</p>
+            </a>
+			
+			  <a href="https://www.instagram.com/borkorsor99/" class="card" target="_blank" data-id="fb-bks-news" data-tooltip="Instagram ศูนย์รวมข่าวสาร เกาะติดสถานการณ์การเดินรถ และกิจกรรมภายในองค์กร บขส.">
+                <div class="icon"><img src="images/ig.jpg" alt="icon"></div>
+                <p>Instagram สถานีข่าว BKS</p>
+            </a>
+			
+			  <a href="https://x.com/BorKorSor99" class="card" target="_blank" data-id="x-bks-news" data-tooltip="X (twitter) ศูนย์รวมข่าวสาร เกาะติดสถานการณ์การเดินรถ และกิจกรรมภายในองค์กร บขส.">
+                <div class="icon"><img src="images/x.jpg" alt="icon"></div>
+                <p> X (twitter) สถานีข่าว BKS</p>
+            </a>
+			
+			  <a href="https://drive.google.com/drive/folders/1on3WO9DQBPiC2LjLbcOe0Xyf3zXd3ruw" class="card" target="_blank" data-id="d-bks-news" data-tooltip="ศูนย์รวมข่าวสาร เกาะติดสถานการณ์การเดินรถ และกิจกรรมภายในองค์กร บขส.">
+                <div class="icon"><img src="images/gg.png" alt="icon"></div>
+                <p> รวมข่าว สถานีข่าว BKS</p>
+            </a>
+			
+            <a href="https://www.facebook.com/profile.php?id=100088273969040" class="card" target="_blank" data-id="fb-medical" data-tooltip="เพจให้ความรู้ด้านสุขภาพ ข่าวสารตรวจสุขภาพพนักงาน และการบริการทางแพทย์ขององค์กร">
+                <div class="icon"><img src="images/fb5.jpg" alt="icon"></div>
+                <p>facebook กองการแพทย์ บขส.</p>
+            </a>
+            <a href="https://www.facebook.com/cg999transport" class="card" target="_blank" data-id="fb-cg" data-tooltip="เพจประชาสัมพันธ์ข้อมูลด้านความโปร่งใส นโยบาย GRC และการต่อต้านทุจริตภายใน บขส.">
+                <div class="icon"><img src="images/fb6.jpg" alt="icon"></div>
+                <p>facebook กำกับดูแลกิจการที่ดี บขส.</p>
+            </a>
+            <a href="https://www.facebook.com/store.sahakorn.bks" class="card" target="_blank" data-id="fb-coop-store" data-tooltip="เพจแจ้งข่าวสารกิจกรรม ประกาศอัตราดอกเบี้ย และสิทธิประโยชน์ของสมาชิกสหกรณ์ร้านค้า">
+                <div class="icon"><img src="images/fb7.jpg" alt="icon"></div>
+                <p>facebook สหกรณ์ การขนส่ง จก.</p>
+            </a>
+            <a href="https://www.facebook.com/saveingscooperative.tcl" class="card" target="_blank" data-id="fb-coop-pvd" data-tooltip="แฟนเพจประชาสัมพันธ์ ข้อมูลข่าวสาร กิจกรรม อัตราดอกเบี้ย และสิทธิประโยชน์ของสมาชิกสหกรณ์ออมทรัพย์ บขส.">
+                <div class="icon"><img src="images/fb10.jpg" alt="icon"></div>
+                <p>facebook สหกรณ์ออมทรัพย์พนักงาน บขส.</p>
+            </a>
+			
+			
+			 <a href="https://www.facebook.com/share/1JmZ42Uq9t/" class="card" target="_blank" data-id="fb-coop-up99" data-tooltip="แฟนเพจ facebook สหภาพ บขส.">
+                <div class="icon"><img src="images/fb11.jpg" alt="icon"></div>
+                <p>facebook สหภาพ บขส.</p>
+            </a>
+			
+			<a href="https://www.facebook.com/99update" class="card" target="_blank" data-id="fb-coop-up88" data-tooltip="แฟนเพจประชาสัมพันธ์ ข้อมูลข่าวสาร งานลูกค้าสัมพันธ์และบริหารการขาย">
+                <div class="icon"><img src="images/fb12.jpg" alt="icon"></div>
+                <p>facebook งานลูกค้าสัมพันธ์และบริหารการขาย </p>
+            </a>
+			
+			<a href="https://www.facebook.com/CSR.BKS1930" class="card" target="_blank" data-id="fb-csr" data-tooltip="แฟนเพจประชาสัมพันธ์ ข้อมูลข่าวสาร งานกิจกรรมเพื่อสังคม โครงการและกิจกรรมอันเป็นประโยชน์ต่อสังคม สิ่งแวดล้อม">
+                <div class="icon"><img src="images/fb13.jpg" alt="icon"></div>
+                <p>facebook CSR BKS</p>
+            </a>
+			
+			
+        </div>
+
+        <div class="category-title">🛠️ หมวดเครื่องมือ AI/โปรแกรมช่วยในการทำงาน</div>
+        <div class="grid-menu">
+            <a href="https://chatgpt.com/" class="card" target="_blank" data-id="ai-chatgpt" data-tooltip="เครื่องมือปัญญาประดิษฐ์ช่วยคิดงาน วิเคราะห์ข้อมูล ร่างเอกสาร และเขียนโค้ดเบื้องต้น">
+                <div class="icon"><img src="images/chatgpt.png" alt="icon"></div>
+                <p>AI Chatgpt</p>
+            </a>
+            <a href="https://gemini.google.com/" class="card" target="_blank" data-id="ai-gemini" data-tooltip="โมเดล AI ของ Google ช่วยสืบค้นข้อมูล ค้นหางานวิจัย ร่างเนื้อหา และสรุปบทความ">
+                <div class="icon"><img src="images/gemini.jpg" alt="icon"></div>
+                <p>AI Gemini</p>
+            </a>
+            <a href="https://claude.ai/new" class="card" target="_blank" data-id="ai-claude" data-tooltip="ผู้ช่วย AI อัจฉริยะ โดดเด่นด้านการเขียนบทความขนาดยาว เรียบเรียงภาษา และวิเคราะห์เชิงลึก">
+                <div class="icon"><img src="images/claude.png" alt="icon"></div>
+                <p>AI Claude</p>
+            </a>
+            <a href="https://meta.ai/" class="card" target="_blank" data-id="ai-meta" data-tooltip="ระบบปัญญาประดิษฐ์ช่วยสร้างสรรค์ไอเดีย และตอบคำถามคำสั่งทั่วไปอย่างรวดเร็ว">
+                <div class="icon"><img src="images/meta.jpg" alt="icon"></div>
+                <p>Meta AI</p>
+            </a>
+            <a href="https://notebooklm.google/" class="card" target="_blank" data-id="ai-notebooklm" data-tooltip="สมุดโน้ตอัจฉริยะจาก Google ช่วยสรุปเนื้อหาจากไฟล์เอกสารวิจัยและสร้างพอดแคสต์">
+                <div class="icon"><img src="images/nb.png" alt="icon"></div>
+                <p>AI Notebooklm</p>
+            </a>
+            <a href="https://copilot.microsoft.com/" class="card" target="_blank" data-id="ai-copilot" data-tooltip="ผู้ช่วย AI จาก Microsoft ช่วยออกแบบสไลด์ สรุปข้อมูล และทำงานร่วมกับระบบปฏิบัติการ">
+                <div class="icon"><img src="images/co.png" alt="icon"></div>
+                <p>AI Copilot</p>
+            </a>
+            <a href="https://www.canva.com//" class="card" target="_blank" data-id="tool-canva" data-tooltip="แพลตฟอร์มออกแบบกราฟิกออนไลน์สำหรับสร้างโปสเตอร์ สไลด์พรีเซนต์ และสื่อสิ่งพิมพ์">
+                <div class="icon"><img src="images/canva.png" alt="icon"></div>
+                <p>Canva</p>
+            </a>
+            <a href="https://www.ilovepdf.com/th" class="card" target="_blank" data-id="tool-ilovepdf" data-tooltip="เครื่องมือออนไลน์ (iLovePDF) สำหรับจัดการไฟล์ จัดเรียงหน้า แปลงไฟล์ และบีบอัด PDF">
+                <div class="icon"><img src="images/pdf.png" alt="icon"></div>
+                <p>โปรแกรมรวม/แยก PDF</p>
+            </a>
+            <a href="https://www.readawrite.com/?action=public_proof" class="card" target="_blank" data-id="tool-proof" data-tooltip="ระบบตรวจทานคำผิด (readAwrite) ช่วยพิสูจน์อักษรภาษาไทยและตรวจคำสับสนก่อนส่งงาน">
+                <div class="icon"><img src="images/proof.jpg" alt="icon"></div>
+                <p>โปรแกรมตรวจคำผิด</p>
+            </a>
+            <a href="https://app.diagrams.net/" class="card" target="_blank" data-id="tool-diagram" data-tooltip="เครื่องมือเขียนผังงาน (draw.io) สำหรับเขียน Flowchart, Network Diagram และโครงสร้างระบบ">
+                <div class="icon"><img src="images/dg.png" alt="icon"></div>
+                <p>โปรแกรมสร้าง Diagram Online</p>
+            </a>
+        </div>
+		
+		
+		       <div class="category-title">⏬ หมวดดาวน์โหลดโปรแกรม</div>
+        <div class="grid-menu">
+            <a href="https://line-pc.com/" class="card" target="_blank" data-id="line-pc" data-tooltip="LINE PC ดาวน์โหลดฟรีโปรแกรมแชท LINE PC ภาษาไทย ">
+                <div class="icon"><img src="images/line.png" alt="icon"></div>
+                <p>ดาวน์โหลดโปรแกรม LINE PC</p>
+            </a>
+             <a href="https://anydesk.com/en" class="card" target="_blank" data-id="anydesk" data-tooltip="ดาวน์โหลดโปรแกรม AnyDesk รีโมทระยะไกล">
+                <div class="icon"><img src="images/anydesk.png" alt="icon"></div>
+                <p>ดาวน์โหลดโปรแกรม Anydesk </p>
+            </a>
+          
+        </div>
+        
+        <div class="category-title">📱 หมวดช่องทางการติดต่อสอบถามข้อมูล/ข่าวประชาสัมพันธ์ผ่านกลุ่ม LINE</div>
+        <div class="grid-menu">
+		
+		 <a href="https://line.me/R/ti/p/@kxd5601q?ts=10161400&oat_content=url" class="card" target="_blank" data-id="line-itd" data-tooltip="ช่องทาง LINE Official สำหรับจองตั๋วโดยสาร">
+                <div class="icon"><img src="images/bks99.png" alt="icon"></div>
+                <p>ไลน์ จองตั๋ว: BKS (ไอดี : @BKS99) </p>
+            </a>
+		
+            <a href="https://lin.ee/9q60ThT" class="card" target="_blank" data-id="line-itd" data-tooltip="ช่องทาง LINE Official สำหรับแจ้งปัญหาคอมพิวเตอร์ ระบบเครือข่าย และขอความช่วยเหลือไอที">
+                <div class="icon"><img src="images/l1.png" alt="icon"></div>
+                <p>ไลน์ กองเทคโนโลยีสารสนเทศ </p>
+            </a>
+            <a href="https://lin.ee/8V4ziEQZ" class="card" target="_blank" data-id="line-smarttime" data-tooltip="ช่องทางติดต่อสอบถาม หรือแจ้งปัญหาการบันทึกเวลาเข้าออกงานของพนักงาน">
+                <div class="icon"><img src="images/l2.png" alt="icon"></div>
+                <p>ไลน์ ระบบ BKS SmartTime</p>
+            </a>
+             <a href="https://lin.ee/nO7whWD" class="card" target="_blank" data-id="line-saraban" data-tooltip="ช่องทางติดต่อผู้ดูแลระบบสารบรรณอิเล็กทรอนิกส์ เพื่อสอบถาม/แจ้งปัญหาการใช้งาน">
+                <div class="icon"><img src="images/l3.png" alt="icon"></div>
+                <p>ไลน์ ระบบ BKS E-sarabun</p>
+            </a>
+             <a href="https://line.me/ti/g2/dMnGW8b53dKnMCv9rw4Jr3GcEvk2jlAHvIqfXw?utm_source=invitation&utm_medium=link_copy&utm_campaign=default" class="card" target="_blank" data-id="line-hr-clinic" data-tooltip="กลุ่มไลน์ให้คำปรึกษา แนะนำสิทธิประโยชน์ และตอบคำถามปัญหาด้านงานบุคคลโดยเจ้าหน้าที่">
+                <div class="icon"><img src="images/l4.png" alt="icon"></div>
+                <p>กลุ่มไลน์  HR Clinic บขส.</p>
+            </a>
+             <a href="https://line.me/ti/g2/g3wRFgSlXGkBya7IUhOM4gBoYaLMvOwcjOgRhA?utm_source=invitation&utm_medium=link_copy&utm_campaign=default" class="card" target="_blank" data-id="line-welfare" data-tooltip="กลุ่มไลน์ประสานงาน แจ้งข้อมูลข่าวสาร และตอบข้อซักถามเกี่ยวกับสวัสดิการพนักงาน บขส.">
+                <div class="icon"><img src="images/l5.png" alt="icon"></div>
+                <p>กลุ่มไลน์ สวัสดิการ บขส.</p>
+            </a>
+            
+            <a href="https://line.me/R/ti/g/EM9qPJg7z4" class="card" target="_blank" data-id="line99" data-tooltip="กลุ่มไลน์ประชาสัมพันธ์ข่าวสารต่างๆของ บขส.">
+                <div class="icon"><img src="images/l6.png" alt="icon"></div>
+                <p>กลุ่มไลน์  ROOM บขส.99</p>
+            </a>
+            
+        </div>
+    </div>
+
+    <button class="back-to-top" id="backToTopBtn" title="ย้อนกลับไปด้านบนสุด">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="18 15 12 9 6 15"></polyline>
+        </svg>
+        <span>ย้อนกลับไปด้านบนสุด</span>
+    </button>
+
+    <footer class="copyright">
+        <p>สงวนสิทธิ์ &copy; 2026 กองเทคโนโลยีสารสนเทศ บริษัท ขนส่ง จำกัด</p>
+        <p style="margin-top: 8px; font-size: 13px; opacity: 0.9;">
+            👁️ จำนวนผู้เข้าชมเว็บไซต์: <span id="visitCount" style="font-weight: bold; color: #ffe066;">กำลังโหลด...</span> ครั้ง
+        </p>
+    </footer>
+
+    <div class="ticker-container" id="newsTicker">
+        <div class="ticker-title">📢 ประกาศข่าวสารจาก กทส.</div>
+        <div class="ticker-wrap">
+            <div class="ticker-text" id="tickerText">
+                <span class="ticker-highlight">[กองเทคโนโลยีสารสนเทศ]</span> ยินดีต้อนรับเข้าสู่  BKS Link Center (ระบบเทคโนโลยีสารสนเทศ บริษัท ขนส่ง จำกัด) ข้อความนี้ใช้สำหรับทดสอบความเร็วตัววิ่ง 
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <span class="ticker-highlight">[นโยบาย GRC]</span> ขณะนี้ระบบประกาศข่าวด่วนอยู่ในระหว่างการพัฒนาและทดสอบระบบการแสดงผล (System Testing)
+            </div>
+        </div>
+		
+		
+    </div>
+
+<script>
+    /* ================= ฟังก์ชันหลักสำหรับการค้นหา/กรองข้อมูล (Filter) ================= */
+    const mainSearchInput = document.getElementById('searchInput');
+    const clearSearchInputBtn = document.getElementById('clearSearchInputBtn');
+
+    function toggleClearSearchButton(value) {
+        if (value.trim() !== "") {
+            clearSearchInputBtn.style.display = "flex";
+        } else {
+            clearSearchInputBtn.style.display = "none";
+        }
+    }
+
+    function filterSystems(searchQuery) {
+        let filter = searchQuery.toLowerCase().trim();
+        let categories = document.querySelectorAll('.container > .category-title');
+        let grids = document.querySelectorAll('.container > .grid-menu');
+
+        toggleClearSearchButton(searchQuery);
+
+        grids.forEach((grid, index) => {
+            if(grid.id === "recentGrid") return;
+
+            let cards = grid.querySelectorAll('.card');
+            let hasVisibleCard = false;
+
+         // ดึงชื่อหมวดหมู่มาเช็คด้วย (ตัดข้อความปุ่มออก)
+let categoryText = "";
+if (categories[index]) {
+    let clone = categories[index].cloneNode(true);
+    let btn = clone.querySelector('.toggle-category-btn');
+    if (btn) btn.remove();
+    categoryText = clone.textContent.toLowerCase().trim();
+}
+// แตกชื่อหมวดเป็นคำย่อย แล้วเช็คทั้งสองทิศ
+const categoryWords = categoryText.split(/\s+/).filter(w => w.length > 1);
+let categoryMatch = filter !== "" && (
+    categoryText.includes(filter) ||
+    categoryWords.some(word => filter.includes(word) && word.length >= 3)
+);
+
+cards.forEach(card => {
+let text = card.querySelector('p').textContent.toLowerCase();
+let tags = (card.getAttribute('data-tags') || '').toLowerCase();
+let tagList = tags.split(',').map(t => t.trim()).filter(Boolean);
+
+// เช็คทั้งสองทิศ: filter อยู่ใน text/tag หรือ tag อยู่ใน filter
+const tagMatch = tagList.some(tag => 
+    filter.includes(tag) || tag.includes(filter)
+);
+
+if (text.includes(filter) || tagMatch || categoryMatch) {
+        card.style.display = "flex";
+        hasVisibleCard = true;
+    } else {
+        card.style.display = "none";
+    }
+});
+
+            if(categories[index]) {
+                if (filter !== "") {
+                    if (hasVisibleCard) {
+                        categories[index].style.display = "flex";
+                        grid.style.setProperty('display', 'grid', 'important');
+                    } else {
+                        categories[index].style.display = "none";
+                        grid.style.setProperty('display', 'none', 'important');
+                    }
+                } else {
+                    categories[index].style.display = "flex";
+                    if (grid.classList.contains('collapsed')) {
+                        grid.style.display = "none";
+                    } else {
+                        grid.style.display = "grid";
+                    }
+                }
+            }
+        });
+    }
+
+    mainSearchInput.addEventListener('keyup', function() {
+        filterSystems(this.value);
+    });
+
+    clearSearchInputBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        mainSearchInput.value = "";
+        filterSystems("");
+        mainSearchInput.focus();
+    });
+
+    /* ================= ฟังก์ชันระบบแท็กคำค้นหายอดนิยม ================= */
+    const searchAreaWrapper = document.getElementById('searchAreaWrapper');
+    const trendingContainer = document.getElementById('trendingContainer');
+    const trendingTags = document.querySelectorAll('.trending-tag');
+
+    mainSearchInput.addEventListener('focus', () => {
+        trendingContainer.classList.add('show');
+    });
+
+    trendingTags.forEach(tag => {
+        tag.addEventListener('mousedown', (e) => {
+            const searchValue = tag.getAttribute('data-search');
+            mainSearchInput.value = searchValue;
+            filterSystems(searchValue);
+        });
+    });
+
+    document.addEventListener('click', (e) => {
+        if (!searchAreaWrapper.contains(e.target)) {
+            trendingContainer.classList.remove('show');
+        }
+    });
+
+    /* ================= ฟังก์ชันค้นหาด้วยเสียง ================= */
+    const voiceSearchBtn = document.getElementById('voiceSearchBtn');
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+    if (SpeechRecognition) {
+        const recognition = new SpeechRecognition();
+        recognition.lang = 'th-TH';
+        recognition.interimResults = false;
+        recognition.maxAlternatives = 1;
+
+        voiceSearchBtn.addEventListener('click', () => {
+            if (voiceSearchBtn.classList.contains('listening')) {
+                recognition.stop();
+                return;
+            }
+            recognition.start();
+        });
+
+        recognition.onstart = () => {
+            voiceSearchBtn.classList.add('listening');
+            mainSearchInput.placeholder = "🎙️ กำลังฟังเสียงของคุณ... พูดได้เลย";
+            trendingContainer.classList.add('show');
+        };
+
+        recognition.onresult = (event) => {
+            const voiceResult = event.results[0][0].transcript;
+            const cleanResult = voiceResult.replace(/\./g, '');
+            mainSearchInput.value = cleanResult;
+            filterSystems(cleanResult);
+        };
+
+        recognition.onend = () => {
+            voiceSearchBtn.classList.remove('listening');
+            mainSearchInput.placeholder = "🔍 ค้นหาระบบที่ต้องการใช้งาน...";
+        };
+
+        recognition.onerror = (event) => {
+            console.error("Speech recognition error: ", event.error);
+            voiceSearchBtn.classList.remove('listening');
+            if(event.error === 'not-allowed') {
+                alert("กรุณาอนุญาตสิทธิ์การใช้งานไมโครโฟนบนเบราว์เซอร์");
+            }
+        };
+    } else {
+        voiceSearchBtn.style.display = 'none';
+    }
+
+    /* ================= ฟังก์ชันกล่องบันทึกช่วยจำ ================= */
+    const noteToggleBtn = document.getElementById('noteToggleBtn');
+    const notesDrawer = document.getElementById('notesDrawer');
+    const stickyNoteArea = document.getElementById('stickyNoteArea');
+    const saveStatus = document.getElementById('saveStatus');
+    let saveTimeout = null;
+
+    noteToggleBtn.addEventListener('click', (e) => {
+        notesDrawer.classList.toggle('open');
+        e.stopPropagation();
+    });
+
+    document.addEventListener('click', (e) => {
+        if (!notesDrawer.contains(e.target) && e.target !== noteToggleBtn && !noteToggleBtn.contains(e.target)) {
+            notesDrawer.classList.remove('open');
+        }
+    });
+
+    function loadNotesFromDB() {
+        const localSaved = localStorage.getItem('bks_employee_notes');
+        if (localSaved !== null) {
+            stickyNoteArea.value = localSaved;
+        }
+    }
+
+    function saveNotesToDB(content) {
+        saveStatus.textContent = "⏳ กำลังบันทึกข้อมูลเข้าสู่ระบบบัญชีพนักงาน...";
+        localStorage.setItem('bks_employee_notes', content);
+        setTimeout(() => {
+            saveStatus.textContent = "✅ บันทึกช่วยจำอัปเดตลงบัญชีส่วนตัวแล้ว";
+        }, 500);
+    }
+
+    stickyNoteArea.addEventListener('input', (e) => {
+        saveStatus.textContent = "✏️ กำลังพิมพ์...";
+        clearTimeout(saveTimeout);
+        saveTimeout = setTimeout(() => {
+            saveNotesToDB(e.target.value);
+        }, 1000);
+    });
+
+    loadNotesFromDB();
+
+    /* ================= ฟังก์ชันสลับธีม ================= */
+    const themeToggleBtn = document.getElementById('themeToggle');
+    const themeIcon = document.getElementById('themeIcon');
+    const themeText = document.getElementById('themeText');
+
+    const currentTheme = localStorage.getItem('theme') ? localStorage.getItem('theme') : null;
+    if (currentTheme) {
+        document.documentElement.setAttribute('data-theme', currentTheme);
+        if (currentTheme === 'dark') {
+            themeIcon.textContent = '☀️';
+            themeText.textContent = 'โหมดสว่าง';
+        }
+    }
+
+    themeToggleBtn.addEventListener('click', () => {
+        let theme = document.documentElement.getAttribute('data-theme');
+        if (theme === 'dark') {
+            document.documentElement.setAttribute('data-theme', 'light');
+            localStorage.setItem('theme', 'light');
+            themeIcon.textContent = '🌙';
+            themeText.textContent = 'โหมดมืด';
+        } else {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            localStorage.setItem('theme', 'dark');
+            themeIcon.textContent = '☀️';
+            themeText.textContent = 'โหมดสว่าง';
+        }
+    });
+
+    /* ================= ฟังก์ชันระบบใช้งานล่าสุด ================= */
+    const MAX_RECENT_ITEMS = 3;
+    const recentSection = document.getElementById('recentSection');
+    const recentGrid = document.getElementById('recentGrid');
+    const clearRecentBtn = document.getElementById('clearRecentBtn');
+
+    function renderRecentItems() {
+        let recentIds = JSON.parse(localStorage.getItem('bks_recent_systems')) || [];
+        if (recentIds.length === 0) {
+            recentSection.style.display = "none";
+            recentGrid.innerHTML = "";
+            return;
+        }
+        let htmlContent = "";
+        let count = 0;
+        recentIds.forEach(id => {
+            let originalCard = document.querySelector(`.container > .grid-menu:not(#recentGrid) .card[data-id="${id}"]`);
+            if (originalCard && count < MAX_RECENT_ITEMS) {
+                let href = originalCard.getAttribute('href');
+                let tooltip = originalCard.getAttribute('data-tooltip');
+                let imgSrc = originalCard.querySelector('.icon img').getAttribute('src');
+                let pText = originalCard.querySelector('p').textContent;
+                htmlContent += `
+                    <a href="${href}" class="card" target="_blank" data-id="${id}" data-tooltip="${tooltip}">
+                        <div class="icon"><img src="${imgSrc}" alt="icon"></div>
+                        <p>${pText}</p>
+                    </a>
+                `;
+                count++;
+            }
+        });
+        if (count > 0) {
+            recentGrid.innerHTML = htmlContent;
+            recentSection.style.display = "block";
+        } else {
+            recentSection.style.display = "none";
+        }
+    }
+
+    document.addEventListener('click', function(e) {
+        let card = e.target.closest('.card');
+        if (!card) return;
+        if (card.closest('#recentGrid')) return;
+        let id = card.getAttribute('data-id');
+        if (!id) return;
+        let recentIds = JSON.parse(localStorage.getItem('bks_recent_systems')) || [];
+        recentIds = recentIds.filter(item => item !== id);
+        recentIds.unshift(id);
+        if (recentIds.length > 5) recentIds.pop();
+        localStorage.setItem('bks_recent_systems', JSON.stringify(recentIds));
+        setTimeout(renderRecentItems, 100);
+    });
+
+    clearRecentBtn.addEventListener('click', () => {
+        localStorage.removeItem('bks_recent_systems');
+        renderRecentItems();
+    });
+
+    renderRecentItems();
+
+function initCategoryToggles() {
+    const categories = document.querySelectorAll('.container > .category-title');
+    const grids = document.querySelectorAll('.container > .grid-menu');
+
+    categories.forEach((category, index) => {
+        const targetGrid = grids[index];
+        if (!targetGrid) return;
+
+
+        const toggleBtn = document.createElement('button');
+toggleBtn.className = 'toggle-category-btn btn-collapse'; // เพิ่ม btn-collapse
+toggleBtn.innerHTML = '🔽 คลิกย่อหมวดหมู่';             // เปลี่ยนข้อความ
+toggleBtn.classList.remove('btn-collapse'); // เริ่มต้นให้แน่ใจว่าเป็นเขียว
+        toggleBtn.title = "คลิกเพื่อย่อหรือขยายหมวดหมู่นี้";
+
+  toggleBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    targetGrid.classList.toggle('collapsed');
+    if (targetGrid.classList.contains('collapsed')) {
+        toggleBtn.innerHTML = '🔼 คลิกขยายหมวดหมู่';
+        toggleBtn.classList.remove('btn-collapse'); // ย่อ = เอาส้มออก = เขียว
+        targetGrid.style.display = "none";
+    } else {
+        toggleBtn.innerHTML = '🔽 คลิกย่อหมวดหมู่';
+        toggleBtn.classList.add('btn-collapse'); // ขยาย = ใส่ส้ม
+        targetGrid.style.setProperty('display', 'grid', 'important');
+    }
+});
+
+        category.appendChild(toggleBtn);
+    });
+
+    /* ปุ่มเดียว สลับขยาย/ย่อ */
+    let allExpanded = true;
+
+   document.getElementById('toggleAllBtn').addEventListener('click', () => {
+    allExpanded = !allExpanded;
+
+    // ล้างช่องค้นหาอัตโนมัติเมื่อกดขยาย/ย่อทั้งหมด
+    if (mainSearchInput.value.trim() !== '') {
+        mainSearchInput.value = '';
+        filterSystems('');
+    }
+
+    document.querySelectorAll('.container > .grid-menu').forEach(grid => {
+            if (grid.id === 'recentGrid') return;
+            if (allExpanded) {
+                grid.classList.remove('collapsed');
+                grid.style.setProperty('display', 'grid', 'important');
+            } else {
+                grid.classList.add('collapsed');
+                grid.style.setProperty('display', 'none', 'important');
+            }
+        });
+
+        document.querySelectorAll('.toggle-category-btn').forEach(btn => {
+    if (btn.id === 'toggleAllBtn') return;
+    if (allExpanded) {
+        btn.innerHTML = '🔽 คลิกย่อหมวดหมู่';
+        btn.classList.add('btn-collapse');
+    } else {
+        btn.innerHTML = '🔼 คลิกขยายหมวดหมู่';
+        btn.classList.remove('btn-collapse');
+    }
+});
+        const toggleAllBtn = document.getElementById('toggleAllBtn');
+if (allExpanded) {
+    toggleAllBtn.innerHTML = '🔽 คลิกเพื่อย่อหมวดหมู่ทั้งหมด';
+    toggleAllBtn.classList.add('btn-collapse');
+} else {
+    toggleAllBtn.innerHTML = '🔼 คลิกเพื่อดูหมวดหมู่ทั้งหมด';
+    toggleAllBtn.classList.remove('btn-collapse');
+}
+    });
+}
+
+initCategoryToggles();
+
+    /* ================= ระบบ Dynamic Greeting Banner & Digital Clock ================= */
+    function updateClockAndGreeting() {
+        const now = new Date();
+        const hours = now.getHours();
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+        const seconds = String(now.getSeconds()).padStart(2, '0');
+        const clockElement = document.getElementById('digitalClock');
+        if (clockElement) {
+            clockElement.textContent = `ขณะนี้เวลา ${hours}:${minutes}:${seconds} น.`;
+        }
+        let greetingStr = "";
+        if (hours >= 5 && hours < 9) {
+            greetingStr = `🌅 อรุณสวัสดิ์ครับ เช้านี้รับชากาแฟก่อนเริ่มงานไหมครับ? อย่าลืมบันทึกเวลาเข้างานน้า`;
+        } else if (hours >= 9 && hours < 12) {
+            greetingStr = `💻 สวัสดีครับ กำลังลุยงานอยู่ใช่ไหมครับ? สู้ๆ กับงานช่วงเช้านะครับ`;
+        } else if (hours >= 12 && hours < 13) {
+            greetingStr = `🍱 พักกลางวันแล้ว! ทานข้าวเที่ยงให้อร่อยและพักผ่อนให้เต็มที่ครับ`;
+        } else if (hours >= 13 && hours < 16) {
+            greetingStr = `☕ สวัสดีครับ บ่ายนี้รับกาแฟสักแก้วแก้ง่วงไหมครับ? ลุยงานช่วงบ่ายกันต่อครับ`;
+        } else if (hours >= 16 && hours < 20) {
+            greetingStr = `⏱️ ใกล้ได้เวลาพักผ่อนแล้ว ก่อนกลับบ้านเย็นนี้ อย่าลืมบันทึกเวลาออกงานนะครับ`;
+        } else {
+            greetingStr = `🌙 สวัสดีรอบดึกครับ ช่วงเวลานี้นอกเวลาทำการหลักแล้ว ขอบคุณที่เหน็ดเหนื่อยเพื่อองค์กรครับ`;
+        }
+        const greetingElement = document.getElementById('greetingMessage');
+        if (greetingElement && greetingElement.innerHTML !== greetingStr) {
+            greetingElement.innerHTML = greetingStr;
+        }
+    }
+
+    function checkHolidayBanner() {
+        const now = new Date();
+        const month = now.getMonth() + 1;
+        const date = now.getDate();
+        const header = document.getElementById('mainHeader');
+        if (!header) return;
+        let bannerImage = "";
+        if (month === 12 && date >= 25 || month === 1 && date <= 3) {
+            bannerImage = "images/banners/newyear_bg.jpg";
+            header.style.borderColor = "#ff3333";
+        } else if (month === 4 && date >= 11 && date <= 17) {
+            bannerImage = "images/banners/songkran_bg.jpg";
+            header.style.borderColor = "#33ccff";
+        } else if (month === 10 && date === 29) {
+            bannerImage = "images/banners/bks_anniversary_bg.jpg";
+            header.style.borderColor = "#E61A8A";
+        }
+        if (bannerImage !== "") {
+            header.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.7)), url('${bannerImage}')`;
+        } else {
+            header.style.backgroundImage = "none";
+        }
+    }
+
+    checkHolidayBanner();
+    updateClockAndGreeting();
+    setInterval(updateClockAndGreeting, 1000);
+
+    /* ================= ฟังก์ชันควบคุมปุ่มย้อนกลับไปด้านบนสุด ================= */
+    const backToTopBtn = document.getElementById('backToTopBtn');
+
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 300) {
+            backToTopBtn.classList.add('show');
+        } else {
+            backToTopBtn.classList.remove('show');
+        }
+    });
+
+    backToTopBtn.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+	
+	/* ================= ปฏิทินมุมซ้ายบน ================= */
+const calendarToggleBtn = document.getElementById('calendarToggleBtn');
+const calendarPopup = document.getElementById('calendarPopup');
+const calMonthYear = document.getElementById('calMonthYear');
+const calDays = document.getElementById('calDays');
+const calPrev = document.getElementById('calPrev');
+const calNext = document.getElementById('calNext');
+
+const thaiMonths = ['มกราคม','กุมภาพันธ์','มีนาคม','เมษายน','พฤษภาคม','มิถุนายน',
+                    'กรกฎาคม','สิงหาคม','กันยายน','ตุลาคม','พฤศจิกายน','ธันวาคม'];
+
+/* วันหยุดราชการไทย ปี ค.ศ. (รูปแบบ "YYYY-MM-DD": "ชื่อวันหยุด") */
+const thaiHolidays = {
+    /* ========== 2025 / พ.ศ. 2568 ========== */
+    "2025-01-01": "วันขึ้นปีใหม่",
+    "2025-02-12": "วันมาฆบูชา",
+    "2025-04-06": "วันจักรี",
+    "2025-04-13": "วันสงกรานต์",
+    "2025-04-14": "วันสงกรานต์",
+    "2025-04-15": "วันสงกรานต์",
+    "2025-05-01": "วันแรงงานแห่งชาติ",
+    "2025-05-05": "วันฉัตรมงคล",
+    "2025-05-11": "วันวิสาขบูชา",
+    "2025-05-12": "วันหยุดชดเชยวันวิสาขบูชา",
+    "2025-06-03": "วันเฉลิมพระชนมพรรษา สมเด็จพระราชินี",
+    "2025-07-10": "วันอาสาฬหบูชา",
+    "2025-07-11": "วันเข้าพรรษา",
+    "2025-07-28": "วันเฉลิมพระชนมพรรษา รัชกาลที่ 10",
+    "2025-08-12": "วันแม่แห่งชาติ",
+    "2025-10-13": "วันคล้ายวันสวรรคต รัชกาลที่ 9",
+    "2025-10-23": "วันปิยมหาราช",
+    "2025-12-05": "วันพ่อแห่งชาติ",
+    "2025-12-10": "วันรัฐธรรมนูญ",
+    "2025-12-31": "วันสิ้นปี",
+
+    /* ========== 2026 / พ.ศ. 2569 ========== */
+    "2026-01-01": "วันขึ้นปีใหม่",
+    "2026-03-03": "วันมาฆบูชา",
+    "2026-04-06": "วันจักรี",
+    "2026-04-13": "วันสงกรานต์",
+    "2026-04-14": "วันสงกรานต์",
+    "2026-04-15": "วันสงกรานต์",
+    "2026-05-01": "วันแรงงานแห่งชาติ",
+    "2026-05-05": "วันฉัตรมงคล",
+    "2026-05-31": "วันวิสาขบูชา",
+    "2026-06-03": "วันเฉลิมพระชนมพรรษา สมเด็จพระราชินี",
+    "2026-06-29": "วันอาสาฬหบูชา",
+    "2026-06-30": "วันเข้าพรรษา",
+    "2026-07-28": "วันเฉลิมพระชนมพรรษา รัชกาลที่ 10",
+    "2026-08-12": "วันแม่แห่งชาติ",
+    "2026-10-13": "วันคล้ายวันสวรรคต รัชกาลที่ 9",
+    "2026-10-23": "วันปิยมหาราช",
+    "2026-12-05": "วันพ่อแห่งชาติ",
+    "2026-12-07": "วันหยุดชดเชยวันรัฐธรรมนูญ",
+    "2026-12-10": "วันรัฐธรรมนูญ",
+    "2026-12-31": "วันสิ้นปี",
+
+    /* ========== 2027 / พ.ศ. 2570 ========== */
+    "2027-01-01": "วันขึ้นปีใหม่",
+    "2027-03-23": "วันมาฆบูชา",
+    "2027-04-06": "วันจักรี",
+    "2027-04-13": "วันสงกรานต์",
+    "2027-04-14": "วันสงกรานต์",
+    "2027-04-15": "วันสงกรานต์",
+    "2027-05-01": "วันแรงงานแห่งชาติ",
+    "2027-05-05": "วันฉัตรมงคล",
+    "2027-05-20": "วันวิสาขบูชา",
+    "2027-06-03": "วันเฉลิมพระชนมพรรษา สมเด็จพระราชินี",
+    "2027-07-18": "วันอาสาฬหบูชา",
+    "2027-07-19": "วันเข้าพรรษา",
+    "2027-07-28": "วันเฉลิมพระชนมพรรษา รัชกาลที่ 10",
+    "2027-08-12": "วันแม่แห่งชาติ",
+    "2027-10-13": "วันคล้ายวันสวรรคต รัชกาลที่ 9",
+    "2027-10-23": "วันปิยมหาราช",
+    "2027-12-05": "วันพ่อแห่งชาติ",
+    "2027-12-06": "วันหยุดชดเชยวันพ่อแห่งชาติ",
+    "2027-12-10": "วันรัฐธรรมนูญ",
+    "2027-12-31": "วันสิ้นปี",
+
+    /* ========== 2028 / พ.ศ. 2571 ========== */
+    "2028-01-01": "วันขึ้นปีใหม่",
+    "2028-01-03": "วันหยุดชดเชยวันขึ้นปีใหม่",
+    "2028-03-11": "วันมาฆบูชา",
+    "2028-04-06": "วันจักรี",
+    "2028-04-13": "วันสงกรานต์",
+    "2028-04-14": "วันสงกรานต์",
+    "2028-04-15": "วันสงกรานต์",
+    "2028-05-01": "วันแรงงานแห่งชาติ",
+    "2028-05-05": "วันฉัตรมงคล",
+    "2028-05-07": "วันวิสาขบูชา",
+    "2028-06-03": "วันเฉลิมพระชนมพรรษา สมเด็จพระราชินี",
+    "2028-07-05": "วันอาสาฬหบูชา",
+    "2028-07-06": "วันเข้าพรรษา",
+    "2028-07-28": "วันเฉลิมพระชนมพรรษา รัชกาลที่ 10",
+    "2028-08-12": "วันแม่แห่งชาติ",
+    "2028-10-13": "วันคล้ายวันสวรรคต รัชกาลที่ 9",
+    "2028-10-23": "วันปิยมหาราช",
+    "2028-12-05": "วันพ่อแห่งชาติ",
+    "2028-12-10": "วันรัฐธรรมนูญ",
+    "2028-12-11": "วันหยุดชดเชยวันรัฐธรรมนูญ",
+    "2028-12-31": "วันสิ้นปี",
+
+    /* ========== 2029 / พ.ศ. 2572 ========== */
+    "2029-01-01": "วันขึ้นปีใหม่",
+    "2029-03-01": "วันมาฆบูชา",
+    "2029-04-06": "วันจักรี",
+    "2029-04-09": "วันหยุดชดเชยวันจักรี",
+    "2029-04-13": "วันสงกรานต์",
+    "2029-04-14": "วันสงกรานต์",
+    "2029-04-15": "วันสงกรานต์",
+    "2029-05-01": "วันแรงงานแห่งชาติ",
+    "2029-05-05": "วันฉัตรมงคล",
+    "2029-05-27": "วันวิสาขบูชา",
+    "2029-06-03": "วันเฉลิมพระชนมพรรษา สมเด็จพระราชินี",
+    "2029-07-24": "วันอาสาฬหบูชา",
+    "2029-07-25": "วันเข้าพรรษา",
+    "2029-07-28": "วันเฉลิมพระชนมพรรษา รัชกาลที่ 10",
+    "2029-07-30": "วันหยุดชดเชยวันเฉลิมพระชนมพรรษา",
+    "2029-08-12": "วันแม่แห่งชาติ",
+    "2029-10-13": "วันคล้ายวันสวรรคต รัชกาลที่ 9",
+    "2029-10-23": "วันปิยมหาราช",
+    "2029-12-05": "วันพ่อแห่งชาติ",
+    "2029-12-10": "วันรัฐธรรมนูญ",
+    "2029-12-31": "วันสิ้นปี",
+
+    /* ========== 2030 / พ.ศ. 2573 ========== */
+    "2030-01-01": "วันขึ้นปีใหม่",
+    "2030-02-18": "วันมาฆบูชา",
+    "2030-04-06": "วันจักรี",
+    "2030-04-08": "วันหยุดชดเชยวันจักรี",
+    "2030-04-13": "วันสงกรานต์",
+    "2030-04-14": "วันสงกรานต์",
+    "2030-04-15": "วันสงกรานต์",
+    "2030-05-01": "วันแรงงานแห่งชาติ",
+    "2030-05-05": "วันฉัตรมงคล",
+    "2030-05-06": "วันหยุดชดเชยวันฉัตรมงคล",
+    "2030-05-16": "วันวิสาขบูชา",
+    "2030-06-03": "วันเฉลิมพระชนมพรรษา สมเด็จพระราชินี",
+    "2030-07-13": "วันอาสาฬหบูชา",
+    "2030-07-14": "วันเข้าพรรษา",
+    "2030-07-28": "วันเฉลิมพระชนมพรรษา รัชกาลที่ 10",
+    "2030-07-29": "วันหยุดชดเชยวันเฉลิมพระชนมพรรษา",
+    "2030-08-12": "วันแม่แห่งชาติ",
+    "2030-10-13": "วันคล้ายวันสวรรคต รัชกาลที่ 9",
+    "2030-10-14": "วันหยุดชดเชยวันคล้ายวันสวรรคต รัชกาลที่ 9",
+    "2030-10-23": "วันปิยมหาราช",
+    "2030-12-05": "วันพ่อแห่งชาติ",
+    "2030-12-10": "วันรัฐธรรมนูญ",
+    "2030-12-31": "วันสิ้นปี",
+
+    /* ========== 2031 / พ.ศ. 2574 ========== */
+    "2031-01-01": "วันขึ้นปีใหม่",
+    "2031-02-07": "วันมาฆบูชา",
+    "2031-04-06": "วันจักรี",
+    "2031-04-07": "วันหยุดชดเชยวันจักรี",
+    "2031-04-13": "วันสงกรานต์",
+    "2031-04-14": "วันสงกรานต์",
+    "2031-04-15": "วันสงกรานต์",
+    "2031-05-01": "วันแรงงานแห่งชาติ",
+    "2031-05-05": "วันฉัตรมงคล",
+    "2031-05-05": "วันวิสาขบูชา",
+    "2031-06-03": "วันเฉลิมพระชนมพรรษา สมเด็จพระราชินี",
+    "2031-07-02": "วันอาสาฬหบูชา",
+    "2031-07-03": "วันเข้าพรรษา",
+    "2031-07-28": "วันเฉลิมพระชนมพรรษา รัชกาลที่ 10",
+    "2031-08-12": "วันแม่แห่งชาติ",
+    "2031-10-13": "วันคล้ายวันสวรรคต รัชกาลที่ 9",
+    "2031-10-23": "วันปิยมหาราช",
+    "2031-12-05": "วันพ่อแห่งชาติ",
+    "2031-12-10": "วันรัฐธรรมนูญ",
+    "2031-12-31": "วันสิ้นปี",
+
+    /* ========== 2032 / พ.ศ. 2575 ========== */
+    "2032-01-01": "วันขึ้นปีใหม่",
+    "2032-02-26": "วันมาฆบูชา",
+    "2032-04-06": "วันจักรี",
+    "2032-04-13": "วันสงกรานต์",
+    "2032-04-14": "วันสงกรานต์",
+    "2032-04-15": "วันสงกรานต์",
+    "2032-05-01": "วันแรงงานแห่งชาติ",
+    "2032-05-03": "วันหยุดชดเชยวันแรงงาน",
+    "2032-05-05": "วันฉัตรมงคล",
+    "2032-05-23": "วันวิสาขบูชา",
+    "2032-06-03": "วันเฉลิมพระชนมพรรษา สมเด็จพระราชินี",
+    "2032-07-19": "วันอาสาฬหบูชา",
+    "2032-07-20": "วันเข้าพรรษา",
+    "2032-07-28": "วันเฉลิมพระชนมพรรษา รัชกาลที่ 10",
+    "2032-08-12": "วันแม่แห่งชาติ",
+    "2032-10-13": "วันคล้ายวันสวรรคต รัชกาลที่ 9",
+    "2032-10-23": "วันปิยมหาราช",
+    "2032-10-25": "วันหยุดชดเชยวันปิยมหาราช",
+    "2032-12-05": "วันพ่อแห่งชาติ",
+    "2032-12-06": "วันหยุดชดเชยวันพ่อแห่งชาติ",
+    "2032-12-10": "วันรัฐธรรมนูญ",
+    "2032-12-31": "วันสิ้นปี",
+
+    /* ========== 2033 / พ.ศ. 2576 ========== */
+    "2033-01-01": "วันขึ้นปีใหม่",
+    "2033-01-03": "วันหยุดชดเชยวันขึ้นปีใหม่",
+    "2033-02-15": "วันมาฆบูชา",
+    "2033-04-06": "วันจักรี",
+    "2033-04-13": "วันสงกรานต์",
+    "2033-04-14": "วันสงกรานต์",
+    "2033-04-15": "วันสงกรานต์",
+    "2033-05-01": "วันแรงงานแห่งชาติ",
+    "2033-05-02": "วันหยุดชดเชยวันแรงงาน",
+    "2033-05-05": "วันฉัตรมงคล",
+    "2033-05-13": "วันวิสาขบูชา",
+    "2033-06-03": "วันเฉลิมพระชนมพรรษา สมเด็จพระราชินี",
+    "2033-07-09": "วันอาสาฬหบูชา",
+    "2033-07-10": "วันเข้าพรรษา",
+    "2033-07-11": "วันหยุดชดเชยวันเข้าพรรษา",
+    "2033-07-28": "วันเฉลิมพระชนมพรรษา รัชกาลที่ 10",
+    "2033-08-12": "วันแม่แห่งชาติ",
+    "2033-10-13": "วันคล้ายวันสวรรคต รัชกาลที่ 9",
+    "2033-10-23": "วันปิยมหาราช",
+    "2033-10-24": "วันหยุดชดเชยวันปิยมหาราช",
+    "2033-12-05": "วันพ่อแห่งชาติ",
+    "2033-12-10": "วันรัฐธรรมนูญ",
+    "2033-12-12": "วันหยุดชดเชยวันรัฐธรรมนูญ",
+    "2033-12-31": "วันสิ้นปี",
+
+    /* ========== 2034 / พ.ศ. 2577 ========== */
+    "2034-01-01": "วันขึ้นปีใหม่",
+    "2034-02-04": "วันมาฆบูชา",
+    "2034-04-06": "วันจักรี",
+    "2034-04-13": "วันสงกรานต์",
+    "2034-04-14": "วันสงกรานต์",
+    "2034-04-15": "วันสงกรานต์",
+    "2034-04-16": "วันหยุดชดเชยวันสงกรานต์",
+    "2034-05-01": "วันแรงงานแห่งชาติ",
+    "2034-05-05": "วันฉัตรมงคล",
+    "2034-05-06": "วันหยุดชดเชยวันฉัตรมงคล",
+    "2034-05-02": "วันวิสาขบูชา",
+    "2034-06-03": "วันเฉลิมพระชนมพรรษา สมเด็จพระราชินี",
+    "2034-06-27": "วันอาสาฬหบูชา",
+    "2034-06-28": "วันเข้าพรรษา",
+    "2034-07-28": "วันเฉลิมพระชนมพรรษา รัชกาลที่ 10",
+    "2034-07-30": "วันหยุดชดเชยวันเฉลิมพระชนมพรรษา",
+    "2034-08-12": "วันแม่แห่งชาติ",
+    "2034-08-13": "วันหยุดชดเชยวันแม่แห่งชาติ",
+    "2034-10-13": "วันคล้ายวันสวรรคต รัชกาลที่ 9",
+    "2034-10-14": "วันหยุดชดเชยวันคล้ายวันสวรรคต รัชกาลที่ 9",
+    "2034-10-23": "วันปิยมหาราช",
+    "2034-12-05": "วันพ่อแห่งชาติ",
+    "2034-12-10": "วันรัฐธรรมนูญ",
+    "2034-12-31": "วันสิ้นปี",
+	
+	/* ========== 2035 / พ.ศ. 2578 ========== */
+    "2035-01-01": "วันขึ้นปีใหม่",
+    "2035-02-23": "วันมาฆบูชา",
+    "2035-04-06": "วันจักรี",
+    "2035-04-08": "วันหยุดชดเชยวันจักรี",
+    "2035-04-13": "วันสงกรานต์",
+    "2035-04-14": "วันสงกรานต์",
+    "2035-04-15": "วันสงกรานต์",
+    "2035-05-01": "วันแรงงานแห่งชาติ",
+    "2035-05-05": "วันฉัตรมงคล",
+    "2035-05-20": "วันวิสาขบูชา",
+    "2035-06-03": "วันเฉลิมพระชนมพรรษา สมเด็จพระราชินี",
+    "2035-07-17": "วันอาสาฬหบูชา",
+    "2035-07-18": "วันเข้าพรรษา",
+    "2035-07-28": "วันเฉลิมพระชนมพรรษา รัชกาลที่ 10",
+    "2035-07-30": "วันหยุดชดเชยวันเฉลิมพระชนมพรรษา",
+    "2035-08-12": "วันแม่แห่งชาติ",
+    "2035-10-13": "วันคล้ายวันสวรรคต รัชกาลที่ 9",
+    "2035-10-14": "วันหยุดชดเชยวันคล้ายวันสวรรคต รัชกาลที่ 9",
+    "2035-10-23": "วันปิยมหาราช",
+    "2035-12-05": "วันพ่อแห่งชาติ",
+    "2035-12-10": "วันรัฐธรรมนูญ",
+    "2035-12-31": "วันสิ้นปี",
+
+    /* ========== 2036 / พ.ศ. 2579 ========== */
+    "2036-01-01": "วันขึ้นปีใหม่",
+    "2036-02-12": "วันมาฆบูชา",
+    "2036-04-06": "วันจักรี",
+    "2036-04-07": "วันหยุดชดเชยวันจักรี",
+    "2036-04-13": "วันสงกรานต์",
+    "2036-04-14": "วันสงกรานต์",
+    "2036-04-15": "วันสงกรานต์",
+    "2036-05-01": "วันแรงงานแห่งชาติ",
+    "2036-05-05": "วันฉัตรมงคล",
+    "2036-05-08": "วันวิสาขบูชา",
+    "2036-06-03": "วันเฉลิมพระชนมพรรษา สมเด็จพระราชินี",
+    "2036-07-05": "วันอาสาฬหบูชา",
+    "2036-07-06": "วันเข้าพรรษา",
+    "2036-07-07": "วันหยุดชดเชยวันเข้าพรรษา",
+    "2036-07-28": "วันเฉลิมพระชนมพรรษา รัชกาลที่ 10",
+    "2036-08-12": "วันแม่แห่งชาติ",
+    "2036-10-13": "วันคล้ายวันสวรรคต รัชกาลที่ 9",
+    "2036-10-23": "วันปิยมหาราช",
+    "2036-12-05": "วันพ่อแห่งชาติ",
+    "2036-12-10": "วันรัฐธรรมนูญ",
+    "2036-12-31": "วันสิ้นปี",
+
+    /* ========== 2037 / พ.ศ. 2580 ========== */
+    "2037-01-01": "วันขึ้นปีใหม่",
+    "2037-03-03": "วันมาฆบูชา",
+    "2037-04-06": "วันจักรี",
+    "2037-04-13": "วันสงกรานต์",
+    "2037-04-14": "วันสงกรานต์",
+    "2037-04-15": "วันสงกรานต์",
+    "2037-05-01": "วันแรงงานแห่งชาติ",
+    "2037-05-04": "วันหยุดชดเชยวันแรงงาน",
+    "2037-05-05": "วันฉัตรมงคล",
+    "2037-05-28": "วันวิสาขบูชา",
+    "2037-06-03": "วันเฉลิมพระชนมพรรษา สมเด็จพระราชินี",
+    "2037-07-25": "วันอาสาฬหบูชา",
+    "2037-07-26": "วันเข้าพรรษา",
+    "2037-07-27": "วันหยุดชดเชยวันเข้าพรรษา",
+    "2037-07-28": "วันเฉลิมพระชนมพรรษา รัชกาลที่ 10",
+    "2037-08-12": "วันแม่แห่งชาติ",
+    "2037-10-13": "วันคล้ายวันสวรรคต รัชกาลที่ 9",
+    "2037-10-23": "วันปิยมหาราช",
+    "2037-12-05": "วันพ่อแห่งชาติ",
+    "2037-12-07": "วันหยุดชดเชยวันพ่อแห่งชาติ",
+    "2037-12-10": "วันรัฐธรรมนูญ",
+    "2037-12-31": "วันสิ้นปี",
+
+    /* ========== 2038 / พ.ศ. 2581 ========== */
+    "2038-01-01": "วันขึ้นปีใหม่",
+    "2038-02-20": "วันมาฆบูชา",
+    "2038-04-06": "วันจักรี",
+    "2038-04-13": "วันสงกรานต์",
+    "2038-04-14": "วันสงกรานต์",
+    "2038-04-15": "วันสงกรานต์",
+    "2038-05-01": "วันแรงงานแห่งชาติ",
+    "2038-05-02": "วันหยุดชดเชยวันแรงงาน",
+    "2038-05-05": "วันฉัตรมงคล",
+    "2038-05-17": "วันวิสาขบูชา",
+    "2038-06-03": "วันเฉลิมพระชนมพรรษา สมเด็จพระราชินี",
+    "2038-07-14": "วันอาสาฬหบูชา",
+    "2038-07-15": "วันเข้าพรรษา",
+    "2038-07-28": "วันเฉลิมพระชนมพรรษา รัชกาลที่ 10",
+    "2038-08-12": "วันแม่แห่งชาติ",
+    "2038-10-13": "วันคล้ายวันสวรรคต รัชกาลที่ 9",
+    "2038-10-23": "วันปิยมหาราช",
+    "2038-10-25": "วันหยุดชดเชยวันปิยมหาราช",
+    "2038-12-05": "วันพ่อแห่งชาติ",
+    "2038-12-06": "วันหยุดชดเชยวันพ่อแห่งชาติ",
+    "2038-12-10": "วันรัฐธรรมนูญ",
+    "2038-12-31": "วันสิ้นปี",
+
+    /* ========== 2039 / พ.ศ. 2582 ========== */
+    "2039-01-01": "วันขึ้นปีใหม่",
+    "2039-01-03": "วันหยุดชดเชยวันขึ้นปีใหม่",
+    "2039-02-09": "วันมาฆบูชา",
+    "2039-04-06": "วันจักรี",
+    "2039-04-13": "วันสงกรานต์",
+    "2039-04-14": "วันสงกรานต์",
+    "2039-04-15": "วันสงกรานต์",
+    "2039-05-01": "วันแรงงานแห่งชาติ",
+    "2039-05-05": "วันฉัตรมงคล",
+    "2039-05-06": "วันวิสาขบูชา",
+    "2039-06-03": "วันเฉลิมพระชนมพรรษา สมเด็จพระราชินี",
+    "2039-07-03": "วันอาสาฬหบูชา",
+    "2039-07-04": "วันเข้าพรรษา",
+    "2039-07-28": "วันเฉลิมพระชนมพรรษา รัชกาลที่ 10",
+    "2039-08-12": "วันแม่แห่งชาติ",
+    "2039-10-13": "วันคล้ายวันสวรรคต รัชกาลที่ 9",
+    "2039-10-23": "วันปิยมหาราช",
+    "2039-10-24": "วันหยุดชดเชยวันปิยมหาราช",
+    "2039-12-05": "วันพ่อแห่งชาติ",
+    "2039-12-10": "วันรัฐธรรมนูญ",
+    "2039-12-12": "วันหยุดชดเชยวันรัฐธรรมนูญ",
+    "2039-12-31": "วันสิ้นปี",
+
+    /* ========== 2040 / พ.ศ. 2583 ========== */
+    "2040-01-01": "วันขึ้นปีใหม่",
+    "2040-02-29": "วันมาฆบูชา",
+    "2040-04-06": "วันจักรี",
+    "2040-04-09": "วันหยุดชดเชยวันจักรี",
+    "2040-04-13": "วันสงกรานต์",
+    "2040-04-14": "วันสงกรานต์",
+    "2040-04-15": "วันสงกรานต์",
+    "2040-04-16": "วันหยุดชดเชยวันสงกรานต์",
+    "2040-05-01": "วันแรงงานแห่งชาติ",
+    "2040-05-05": "วันฉัตรมงคล",
+    "2040-05-24": "วันวิสาขบูชา",
+    "2040-06-03": "วันเฉลิมพระชนมพรรษา สมเด็จพระราชินี",
+    "2040-07-21": "วันอาสาฬหบูชา",
+    "2040-07-22": "วันเข้าพรรษา",
+    "2040-07-23": "วันหยุดชดเชยวันเข้าพรรษา",
+    "2040-07-28": "วันเฉลิมพระชนมพรรษา รัชกาลที่ 10",
+    "2040-07-30": "วันหยุดชดเชยวันเฉลิมพระชนมพรรษา",
+    "2040-08-12": "วันแม่แห่งชาติ",
+    "2040-08-13": "วันหยุดชดเชยวันแม่แห่งชาติ",
+    "2040-10-13": "วันคล้ายวันสวรรคต รัชกาลที่ 9",
+    "2040-10-14": "วันหยุดชดเชยวันคล้ายวันสวรรคต รัชกาลที่ 9",
+    "2040-10-23": "วันปิยมหาราช",
+    "2040-12-05": "วันพ่อแห่งชาติ",
+    "2040-12-10": "วันรัฐธรรมนูญ",
+    "2040-12-31": "วันสิ้นปี",
+
+    /* ========== 2041 / พ.ศ. 2584 ========== */
+    "2041-01-01": "วันขึ้นปีใหม่",
+    "2041-02-17": "วันมาฆบูชา",
+    "2041-04-06": "วันจักรี",
+    "2041-04-08": "วันหยุดชดเชยวันจักรี",
+    "2041-04-13": "วันสงกรานต์",
+    "2041-04-14": "วันสงกรานต์",
+    "2041-04-15": "วันสงกรานต์",
+    "2041-05-01": "วันแรงงานแห่งชาติ",
+    "2041-05-05": "วันฉัตรมงคล",
+    "2041-05-06": "วันหยุดชดเชยวันฉัตรมงคล",
+    "2041-05-13": "วันวิสาขบูชา",
+    "2041-06-03": "วันเฉลิมพระชนมพรรษา สมเด็จพระราชินี",
+    "2041-07-11": "วันอาสาฬหบูชา",
+    "2041-07-12": "วันเข้าพรรษา",
+    "2041-07-28": "วันเฉลิมพระชนมพรรษา รัชกาลที่ 10",
+    "2041-07-29": "วันหยุดชดเชยวันเฉลิมพระชนมพรรษา",
+    "2041-08-12": "วันแม่แห่งชาติ",
+    "2041-10-13": "วันคล้ายวันสวรรคต รัชกาลที่ 9",
+    "2041-10-14": "วันหยุดชดเชยวันคล้ายวันสวรรคต รัชกาลที่ 9",
+    "2041-10-23": "วันปิยมหาราช",
+    "2041-12-05": "วันพ่อแห่งชาติ",
+    "2041-12-10": "วันรัฐธรรมนูญ",
+    "2041-12-31": "วันสิ้นปี",
+
+    /* ========== 2042 / พ.ศ. 2585 ========== */
+    "2042-01-01": "วันขึ้นปีใหม่",
+    "2042-02-06": "วันมาฆบูชา",
+    "2042-04-06": "วันจักรี",
+    "2042-04-07": "วันหยุดชดเชยวันจักรี",
+    "2042-04-13": "วันสงกรานต์",
+    "2042-04-14": "วันสงกรานต์",
+    "2042-04-15": "วันสงกรานต์",
+    "2042-05-01": "วันแรงงานแห่งชาติ",
+    "2042-05-05": "วันฉัตรมงคล",
+    "2042-05-02": "วันวิสาขบูชา",
+    "2042-06-03": "วันเฉลิมพระชนมพรรษา สมเด็จพระราชินี",
+    "2042-06-30": "วันอาสาฬหบูชา",
+    "2042-07-01": "วันเข้าพรรษา",
+    "2042-07-28": "วันเฉลิมพระชนมพรรษา รัชกาลที่ 10",
+    "2042-08-12": "วันแม่แห่งชาติ",
+    "2042-10-13": "วันคล้ายวันสวรรคต รัชกาลที่ 9",
+    "2042-10-23": "วันปิยมหาราช",
+    "2042-12-05": "วันพ่อแห่งชาติ",
+    "2042-12-10": "วันรัฐธรรมนูญ",
+    "2042-12-31": "วันสิ้นปี",
+
+    /* ========== 2043 / พ.ศ. 2586 ========== */
+    "2043-01-01": "วันขึ้นปีใหม่",
+    "2043-01-02": "วันหยุดชดเชยวันขึ้นปีใหม่",
+    "2043-02-25": "วันมาฆบูชา",
+    "2043-04-06": "วันจักรี",
+    "2043-04-13": "วันสงกรานต์",
+    "2043-04-14": "วันสงกรานต์",
+    "2043-04-15": "วันสงกรานต์",
+    "2043-05-01": "วันแรงงานแห่งชาติ",
+    "2043-05-05": "วันฉัตรมงคล",
+    "2043-05-22": "วันวิสาขบูชา",
+    "2043-06-03": "วันเฉลิมพระชนมพรรษา สมเด็จพระราชินี",
+    "2043-07-19": "วันอาสาฬหบูชา",
+    "2043-07-20": "วันเข้าพรรษา",
+    "2043-07-28": "วันเฉลิมพระชนมพรรษา รัชกาลที่ 10",
+    "2043-08-12": "วันแม่แห่งชาติ",
+    "2043-10-13": "วันคล้ายวันสวรรคต รัชกาลที่ 9",
+    "2043-10-23": "วันปิยมหาราช",
+    "2043-12-05": "วันพ่อแห่งชาติ",
+    "2043-12-07": "วันหยุดชดเชยวันพ่อแห่งชาติ",
+    "2043-12-10": "วันรัฐธรรมนูญ",
+    "2043-12-31": "วันสิ้นปี",
+
+    /* ========== 2044 / พ.ศ. 2587 ========== */
+    "2044-01-01": "วันขึ้นปีใหม่",
+    "2044-02-14": "วันมาฆบูชา",
+    "2044-04-06": "วันจักรี",
+    "2044-04-13": "วันสงกรานต์",
+    "2044-04-14": "วันสงกรานต์",
+    "2044-04-15": "วันสงกรานต์",
+    "2044-05-01": "วันแรงงานแห่งชาติ",
+    "2044-05-02": "วันหยุดชดเชยวันแรงงาน",
+    "2044-05-05": "วันฉัตรมงคล",
+    "2044-05-10": "วันวิสาขบูชา",
+    "2044-06-03": "วันเฉลิมพระชนมพรรษา สมเด็จพระราชินี",
+    "2044-07-07": "วันอาสาฬหบูชา",
+    "2044-07-08": "วันเข้าพรรษา",
+    "2044-07-28": "วันเฉลิมพระชนมพรรษา รัชกาลที่ 10",
+    "2044-08-12": "วันแม่แห่งชาติ",
+    "2044-10-13": "วันคล้ายวันสวรรคต รัชกาลที่ 9",
+    "2044-10-23": "วันปิยมหาราช",
+    "2044-10-24": "วันหยุดชดเชยวันปิยมหาราช",
+    "2044-12-05": "วันพ่อแห่งชาติ",
+    "2044-12-10": "วันรัฐธรรมนูญ",
+    "2044-12-12": "วันหยุดชดเชยวันรัฐธรรมนูญ",
+    "2044-12-31": "วันสิ้นปี",
+};
+
+let calDate = new Date();
+
+function renderCalendar(d) {
+    const year = d.getFullYear();
+    const month = d.getMonth();
+    const today = new Date();
+    calMonthYear.textContent = `${thaiMonths[month]} ${year + 543}`;
+    const firstDay = new Date(year, month, 1).getDay();
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+    const daysInPrev = new Date(year, month, 0).getDate();
+
+    function pad(n) { return String(n).padStart(2, '0'); }
+    function isHoliday(y, m, day) {
+        const key = `${y}-${pad(m + 1)}-${pad(day)}`;
+        return thaiHolidays[key] || null;
+    }
+
+    let html = '';
+
+    /* วันจากเดือนก่อน */
+    for (let i = firstDay - 1; i >= 0; i--) {
+        html += `<div class="cal-day other-month">${daysInPrev - i}</div>`;
+    }
+
+    /* วันในเดือนปัจจุบัน */
+    for (let day = 1; day <= daysInMonth; day++) {
+        const dow = new Date(year, month, day).getDay();
+        const holidayName = isHoliday(year, month, day);
+        const isToday = (year === today.getFullYear() && month === today.getMonth() && day === today.getDate());
+
+        let cls = '';
+        let style = '';
+        let title = '';
+
+        if (isToday) cls += ' today';
+        if (dow === 0) cls += ' sunday';
+        if (dow === 6) cls += ' saturday';
+
+        if (holidayName) {
+            cls += ' holiday';
+            title = `title="${holidayName}"`;
+        }
+
+        html += `<div class="cal-day${cls}" ${title}>${day}${holidayName ? '<span class="holiday-dot"></span>' : ''}</div>`;
+    }
+
+    /* วันจากเดือนถัดไป */
+    const remaining = (7 - (firstDay + daysInMonth) % 7) % 7;
+    for (let i = 1; i <= remaining; i++) {
+        html += `<div class="cal-day other-month">${i}</div>`;
+    }
+
+    calDays.innerHTML = html;
+}
+
+calendarToggleBtn.addEventListener('click', (e) => {
+    calendarPopup.classList.toggle('open');
+    renderCalendar(calDate);
+    e.stopPropagation();
+});
+calPrev.addEventListener('click', () => {
+    calDate.setMonth(calDate.getMonth() - 1);
+    renderCalendar(calDate);
+});
+calNext.addEventListener('click', () => {
+    calDate.setMonth(calDate.getMonth() + 1);
+    renderCalendar(calDate);
+});
+document.addEventListener('click', (e) => {
+    if (!calendarPopup.contains(e.target) && e.target !== calendarToggleBtn && !calendarToggleBtn.contains(e.target)) {
+        calendarPopup.classList.remove('open');
+    }
+});
+	
+	
+	/* ================= ระบบนับจำนวนผู้เข้าชมเว็บไซต์ (Local Counter) ================= */
+        function updateVisitorCount() {
+            const countElement = document.getElementById('visitCount');
+            if (!countElement) return;
+
+            // กำหนดค่าเริ่มต้นของระบบ (สามารถปรับเลขตั้งต้นได้ที่นี่)
+            const START_COUNT = 100; 
+
+            // ดึงข้อมูลการเข้าชมจาก localStorage
+            let currentCount = localStorage.getItem('bks_visitor_count');
+
+            if (!currentCount) {
+                currentCount = START_COUNT;
+            } else {
+                currentCount = parseInt(currentCount) + 1;
+            }
+
+            // บันทึกค่าใหม่ลงในเครื่อง
+            localStorage.setItem('bks_visitor_count', currentCount);
+
+            // แสดงผลตัวเลข
+            countElement.textContent = Number(currentCount).toLocaleString('th-TH');
+        }
+
+        // เรียกใช้งานฟังก์ชัน
+        updateVisitorCount();
+	
+</script>
+</body>
+</html>
